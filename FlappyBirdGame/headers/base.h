@@ -9,9 +9,7 @@
 
 using namespace std;
 
-
 class BaseTexture;
-
 
 class position
 {
@@ -40,27 +38,22 @@ public:
     int tHeight;
 
 public:
-
     static SDL_Window* gWindow;
     static SDL_Renderer* gRenderer;
     static SDL_Event event;
     static bool quit;
+    static bool die;
+    static int score;
 
 
     static const int SCREEN_WIDTH = 350;
     static const int SCREEN_HEIGHT = 625;
-
-
-    static bool initGraphic();
-    static void releaseGraphic();
-
-
-    static bool die;
-    static int score;
     static const int PIPE_SPACE = 160;
     static const int TOTAL_PIPE = 4;
     static const int PIPE_DISTANCE = 220;
     static const int LAND_HEIGHT = 140;
     static const int BIRD_WIDTH = 50;
     static const int BIRD_HEIGHT = 35;
-};
+
+    static bool initGraphic();
+    static void releaseGraphic();
