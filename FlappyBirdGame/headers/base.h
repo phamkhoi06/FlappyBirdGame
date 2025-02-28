@@ -24,7 +24,6 @@ public:
     BaseTexture();
     virtual ~BaseTexture() { free(); }
 
-
     virtual bool Load(string path, double scale = 1);
     virtual void Render(int x, int y, int angle = 0, SDL_Rect* clip = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
     virtual void free();
@@ -46,6 +45,9 @@ public:
     static int score;
 
 
+    enum InputType { INPUT_QUIT, INPUT_PLAY, INPUT_NONE };
+
+
     static const int SCREEN_WIDTH = 350;
     static const int SCREEN_HEIGHT = 625;
     static const int PIPE_SPACE = 160;
@@ -57,3 +59,4 @@ public:
 
     static bool initGraphic();
     static void releaseGraphic();
+};
