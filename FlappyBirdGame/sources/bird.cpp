@@ -5,116 +5,106 @@
 bool
 Bird::init(bool isDark)
 {
-    string bird_path = "resources/image/bird.png";
-    if (Load(bird_path.c_str(), 1.0))
+    string bird_path = isDark ? "resources/image/bird-dark.png" : "resources/image/bird.png";
+    if (saved_path == bird_path && !isNULL())
     {
-        posBird.getPos(75, BaseTexture::SCREEN_HEIGHT / 2 - BaseTexture::BIRD_HEIGHT / 2);
-        angle = 0;
-        velocityY = 0;
+        posBird.getPos(75, SCREEN_HEIGHT / 2 - BIRD_HEIGHT / 2);
         ahead = 0;
+        angle = 0;
+        resetTime();
         return true;
     }
-    else
+    if (isNULL() || saved_path != bird_path)
     {
-        printf("Failed to load bird texture!\n");
-        return false;
+        saved_path = bird_path;
+        if (Load(bird_path.c_str(), 1))
+        {
+            posBird.getPos(75, SCREEN_HEIGHT / 2 - BIRD_HEIGHT / 2);
+            ahead = 0;
+            angle = 0;
+            resetTime();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
+    return false;
 }
-void Bird::Free() { free(); }
-void Bird::render() { Render(posBird.x, posBird.y, angle); }
-void Bird::applyGravity()
+void Bird::Free()
 {
-    const double GRAVITY = 0.3;
-    const double MAX_FALL_SPEED = 8.0;
-    if (!BaseTexture::die)
+    free();
+    saved_path = "";
+}
+void Bird::render() { Render(posBird.x, posBird.y, angle); }
+void Bird::fall()
+{
+    if (die && posBird.y < SCREEN_HEIGHT - LAND_HEIGHT - BIRD_HEIGHT - 5)
     {
-        velocityY += GRAVITY;
-        if (velocityY > MAX_FALL_SPEED)
-            velocityY = MAX_FALL_SPEED;
-        posBird.y += (int)velocityY;
-        if (posBird.y + getHeight() >= BaseTexture::SCREEN_HEIGHT - BaseTexture::LAND_HEIGHT)
+        if (time == 0)
         {
-            posBird.y = BaseTexture::SCREEN_HEIGHT - BaseTexture::LAND_HEIGHT - getHeight();
-            velocityY = 0;
-            BaseTexture::die = true;
+            x0 = posBird.y;
+            angle = -25;
         }
-        if (posBird.y < 0)
-        {
-            posBird.y = 0;
-            velocityY = 0;
-            BaseTexture::die = true;
-        }
-        if (velocityY > 1.0)
+        else if (angle < 70 && time > 30)
         {
             angle += 3;
-            if (angle > 70)
-                angle = 70;
         }
-        else if (angle > 0)
+        if (time >= 0)
         {
-            angle -= 2;
-            if (angle < 0)
-                angle = 0;
+            posBird.y = x0 + time * time * 0.18 - 7.3 * time;
+            time++;
         }
     }
     else
-    {
-        velocityY += GRAVITY;
-        if (velocityY > MAX_FALL_SPEED)
-            velocityY = MAX_FALL_SPEED;
-        posBird.y += (int)velocityY;
-        if (posBird.y + getHeight() > BaseTexture::SCREEN_HEIGHT - BaseTexture::LAND_HEIGHT)
-        {
-            posBird.y = BaseTexture::SCREEN_HEIGHT - BaseTexture::LAND_HEIGHT - getHeight();
-            velocityY = 0;
-        }
-        if (velocityY > 1.0)
-        {
-            angle += 3;
-            if (angle > 70)
-                angle = 70;
-        }
-    }
+        return;
 }
 void Bird::update(int pipeWidth, int pipeHeight)
 {
-    if (!BaseTexture::die)
+    if (!die)
     {
-        applyGravity();
-        if (!BaseTexture::die && !posPipe.empty())
+        if (time == 0)
         {
-            position currentPipe = posPipe[ahead];
-            int birdRight = posBird.x + getWidth();
-            int pipeRight = currentPipe.x + pipeWidth;
-            int tolerance = 5;
-            if (birdRight > currentPipe.x + tolerance && posBird.x < pipeRight - tolerance)
-            {
-                bool hitTop = posBird.y < currentPipe.y + pipeHeight - tolerance;
-                bool hitBottom = posBird.y + getHeight() > currentPipe.y + pipeHeight + BaseTexture::PIPE_SPACE + tolerance;
-                if (hitTop || hitBottom)
-                {
-                    BaseTexture::die = true;
-                    return;
-                }
-            }
-            if (posBird.x > pipeRight)
-            {
-                BaseTexture::score++;
-                printf("Score: %d\n", BaseTexture::score);
-                ahead = (ahead + 1) % BaseTexture::TOTAL_PIPE;
-            }
+            x0 = posBird.y;
+            angle = -25;
+        }
+        else if (angle < 70 && time > 30)
+        {
+            angle += 3;
+        }
+        if (time >= 0)
+        {
+            posBird.y = x0 + time * time * 0.18 - 7.3 * time;
+            time++;
+        }
+        bool collided = false;
+        if (!posPipe.empty() && (posBird.x + getWidth() > posPipe[ahead].x + 5) && (posBird.x + 5 < posPipe[ahead].x + pipeWidth) && (posBird.y + 5 < posPipe[ahead].y + pipeHeight || posBird.y + getHeight() > posPipe[ahead].y + pipeHeight + PIPE_SPACE + 5))
+        {
+            collided = true;
+        }
+        if (posBird.y > SCREEN_HEIGHT - LAND_HEIGHT - BIRD_HEIGHT - 5 || posBird.y < -10)
+        {
+            collided = true;
+        }
+        if (collided)
+        {
+            die = true;
+            return;
+        }
+        if (!posPipe.empty() && posBird.x > posPipe[ahead].x + pipeWidth)
+        {
+            ahead = (ahead + 1) % TOTAL_PIPE;
+            score++;
         }
     }
-    else
-    {
-        applyGravity();
-    }
 }
+void Bird::resetTime() { time = 0; }
 void Bird::flap()
 {
-    if (!BaseTexture::die)
+    if (!die)
     {
-        velocityY = -6.5;
         angle = -25;
+        resetTime();
     }
 }

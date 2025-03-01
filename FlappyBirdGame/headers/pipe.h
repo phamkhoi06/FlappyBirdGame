@@ -2,15 +2,15 @@
 #include <iostream>
 #include <vector>
 #include "base.h"
-#include <stdlib.h>
-#include <time.h>
 using namespace std;
 extern vector<position> posPipe;
 class pipe : public BaseTexture
 {
+private:
+    const int randMin = -320 + 30;
+    const int randMax = SCREEN_HEIGHT - LAND_HEIGHT - 320 - PIPE_SPACE - 30;
+
 public:
-    pipe() {}
-    ~pipe() { Free(); }
     bool init();
     void Free();
     void render();
