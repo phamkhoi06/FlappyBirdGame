@@ -1,5 +1,5 @@
 #pragma once
-#include "base.h" // Include from same directory
+#include "base.h"
 using namespace std;
 class land : public BaseTexture
 {

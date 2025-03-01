@@ -1,8 +1,7 @@
-#include "../headers/bird.h" // Updated include path
-#include "../headers/pipe.h" // Updated include path
+#include "../headers/bird.h"
+#include "../headers/pipe.h"
 #include <stdio.h>
 #include <iostream>
-
 bool
 Bird::init(bool isDark)
 {
@@ -77,7 +76,6 @@ void Bird::applyGravity()
         }
     }
 }
-// Includes collision detection
 void Bird::update(int pipeWidth, int pipeHeight)
 {
     if (!BaseTexture::die)
@@ -87,18 +85,23 @@ void Bird::update(int pipeWidth, int pipeHeight)
         {
             position currentPipe = posPipe[ahead];
             int birdRight = posBird.x + getWidth();
-            int birdBottom = posBird.y + getHeight();
             int pipeRight = currentPipe.x + pipeWidth;
             int tolerance = 5;
             if (birdRight > currentPipe.x + tolerance && posBird.x < pipeRight - tolerance)
             {
                 bool hitTop = posBird.y < currentPipe.y + pipeHeight - tolerance;
-                bool hitBottom = birdBottom > currentPipe.y + pipeHeight + BaseTexture::PIPE_SPACE + tolerance;
+                bool hitBottom = posBird.y + getHeight() > currentPipe.y + pipeHeight + BaseTexture::PIPE_SPACE + tolerance;
                 if (hitTop || hitBottom)
                 {
                     BaseTexture::die = true;
                     return;
                 }
+            }
+            if (posBird.x > pipeRight)
+            {
+                BaseTexture::score++;
+                printf("Score: %d\n", BaseTexture::score);
+                ahead = (ahead + 1) % BaseTexture::TOTAL_PIPE;
             }
         }
     }

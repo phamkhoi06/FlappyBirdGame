@@ -1,16 +1,12 @@
 #pragma once
-
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <string>
 #include <vector>
 #include <stdio.h>
-
 using namespace std;
-
 class BaseTexture;
-
 class position
 {
 public:
@@ -49,14 +45,4 @@ public:
     static const int LAND_HEIGHT;
     static const int BIRD_WIDTH;
     static const int BIRD_HEIGHT;
-    static bool initGraphic();
-    static void releaseGraphic();
 };
-const int BaseTexture::SCREEN_WIDTH = 350;
-const int BaseTexture::SCREEN_HEIGHT = 625;
-const int BaseTexture::PIPE_SPACE = 160;
-const int BaseTexture::TOTAL_PIPE = 4;
-const int BaseTexture::PIPE_DISTANCE = 220;
-const int BaseTexture::LAND_HEIGHT = 140;
-const int BaseTexture::BIRD_WIDTH = 50;
-const int BaseTexture::BIRD_HEIGHT = 35;
