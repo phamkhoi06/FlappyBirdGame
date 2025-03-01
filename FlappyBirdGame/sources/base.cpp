@@ -7,7 +7,6 @@ int BaseTexture::score = 0;
 SDL_Window* BaseTexture::gWindow = NULL;
 SDL_Renderer* BaseTexture::gRenderer = NULL;
 SDL_Event BaseTexture::event;
-
 BaseTexture::BaseTexture()
 {
     Texture = NULL;
@@ -61,12 +60,7 @@ bool BaseTexture::Load(string path, double scale)
     }
     return Texture != NULL;
 }
-bool BaseTexture::isNULL()
-{
-    if (Texture == NULL)
-        return true;
-    return false;
-}
+bool BaseTexture::isNULL() { return Texture == NULL; }
 void position::getPos(const int x, const int y)
 {
     this->x = x;
@@ -75,7 +69,7 @@ void position::getPos(const int x, const int y)
 bool BaseTexture::initGraphic()
 {
     bool success = true;
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
     {
         printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
         success = false;
@@ -83,9 +77,7 @@ bool BaseTexture::initGraphic()
     else
     {
         if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
-        {
             printf("Warning: Linear texture filtering not enabled!");
-        }
         gWindow = SDL_CreateWindow("Flappy Bird", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
         if (gWindow == NULL)
         {
@@ -122,16 +114,12 @@ bool BaseTexture::initGraphic()
 void BaseTexture::releaseGraphic()
 {
     if (gRenderer)
-    {
         SDL_DestroyRenderer(gRenderer);
-        gRenderer = NULL;
-    }
+    gRenderer = NULL;
     if (gWindow)
-    {
         SDL_DestroyWindow(gWindow);
-        gWindow = NULL;
-    }
-    IMG_Quit();
+    gWindow = NULL;
     TTF_Quit();
+    IMG_Quit();
     SDL_Quit();
 }

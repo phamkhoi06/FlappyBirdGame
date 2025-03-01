@@ -5,29 +5,35 @@
 
 game::game()
 {
+    srand(time(NULL));
     if (!BaseTexture::initGraphic())
     {
-        printf("FATAL: Graphics initialization failed!\n");
         BaseTexture::quit = true;
     }
     else
     {
-        // Initialize bird
         if (!bird.init())
         {
-            printf("FATAL: Bird initialization failed!\n");
+            BaseTexture::quit = true;
+        }
+        if (!pipe.init())
+        {
+            BaseTexture::quit = true;
+        }
+        if (!land.init())
+        {
             BaseTexture::quit = true;
         }
     }
     userInput.Type = input::NONE;
-}
-
+} // Init land
 game::~game()
 {
     bird.Free();
+    pipe.Free();
+    land.Free();
     BaseTexture::releaseGraphic();
-}
-
+} // Free land
 void game::takeInput()
 {
     userInput.Type = input::NONE;
@@ -38,55 +44,46 @@ void game::takeInput()
             userInput.Type = input::QUIT;
             BaseTexture::quit = true;
         }
-        else if (BaseTexture::event.type == SDL_MOUSEBUTTONDOWN ||
-            (BaseTexture::event.type == SDL_KEYDOWN &&
-                (BaseTexture::event.key.keysym.sym == SDLK_SPACE || BaseTexture::event.key.keysym.sym == SDLK_UP) &&
-                BaseTexture::event.key.repeat == 0))
+        else if (BaseTexture::event.type == SDL_MOUSEBUTTONDOWN || (BaseTexture::event.type == SDL_KEYDOWN && (BaseTexture::event.key.keysym.sym == SDLK_SPACE || BaseTexture::event.key.keysym.sym == SDLK_UP) && BaseTexture::event.key.repeat == 0))
         {
             userInput.Type = input::PLAY;
         }
     }
 }
-
 void game::update()
 {
-    if (!isDie())
+    bool wasAlive = !isDie();
+    if (wasAlive)
     {
         if (userInput.Type == input::PLAY)
         {
             bird.flap();
         }
-        bird.update();
+        pipe.update();
+        land.update();
     }
-    else
-    {
-        bird.applyGravity();
-    }
+    bird.update(getPipeWidth(), getPipeHeight());
+    if (wasAlive && isDie())
+        printf("--- GAME OVER ---\n");
 }
-
 void game::render()
 {
     SDL_SetRenderDrawColor(BaseTexture::gRenderer, 135, 206, 235, 0xFF);
     SDL_RenderClear(BaseTexture::gRenderer);
-
+    pipe.render();
+    land.render();
     bird.render();
-}
-
-void game::display()
+} // Render land
+void game::display() { SDL_RenderPresent(BaseTexture::gRenderer); }
+bool game::isQuit() { return BaseTexture::quit; }
+bool game::isDie() { return BaseTexture::die; }
+void game::Restart()
 {
-    SDL_RenderPresent(BaseTexture::gRenderer);
+    BaseTexture::die = false;
+    BaseTexture::score = 0;
+    bird.init();
+    pipe.init();
+    userInput.Type = input::NONE;
 }
-
-bool game::isQuit()
-{
-    return BaseTexture::quit;
-}
-
-bool game::isDie()
-{
-    return BaseTexture::die;
-}
-
-void game::Restart() { /* To be implemented */ }
-int game::getPipeWidth() { return 0; }
-int game::getPipeHeight() { return 0; }
+int game::getPipeWidth() { return pipe.width(); }
+int game::getPipeHeight() { return pipe.height(); }

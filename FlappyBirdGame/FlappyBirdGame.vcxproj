@@ -133,7 +133,9 @@
     <ClCompile Include="sources\base.cpp" />
     <ClCompile Include="sources\bird.cpp" />
     <ClCompile Include="sources\game.cpp" />
+    <ClCompile Include="sources\land.cpp" />
     <ClCompile Include="sources\main.cpp" />
+    <ClCompile Include="sources\pipe.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitattributes" />
@@ -146,6 +148,8 @@
     <ClInclude Include="headers\base.h" />
     <ClInclude Include="headers\bird.h" />
     <ClInclude Include="headers\game.h" />
+    <ClInclude Include="headers\land.h" />
+    <ClInclude Include="headers\pipe.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

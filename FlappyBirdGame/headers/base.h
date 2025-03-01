@@ -17,13 +17,11 @@ public:
     int x = 0, y = 0, angle = 0, state = 0;
     void getPos(const int x, const int y);
 };
-
 class BaseTexture
 {
 public:
     BaseTexture();
     virtual ~BaseTexture() { free(); }
-
     virtual bool Load(string path, double scale = 1);
     virtual void Render(int x, int y, int angle = 0, SDL_Rect* clip = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
     virtual void free();
@@ -43,20 +41,22 @@ public:
     static bool quit;
     static bool die;
     static int score;
-
-
-    enum InputType { INPUT_QUIT, INPUT_PLAY, INPUT_NONE };
-
-
-    static const int SCREEN_WIDTH = 350;
-    static const int SCREEN_HEIGHT = 625;
-    static const int PIPE_SPACE = 160;
-    static const int TOTAL_PIPE = 4;
-    static const int PIPE_DISTANCE = 220;
-    static const int LAND_HEIGHT = 140;
-    static const int BIRD_WIDTH = 50;
-    static const int BIRD_HEIGHT = 35;
-
+    static const int SCREEN_WIDTH;
+    static const int SCREEN_HEIGHT;
+    static const int PIPE_SPACE;
+    static const int TOTAL_PIPE;
+    static const int PIPE_DISTANCE;
+    static const int LAND_HEIGHT;
+    static const int BIRD_WIDTH;
+    static const int BIRD_HEIGHT;
     static bool initGraphic();
     static void releaseGraphic();
 };
+const int BaseTexture::SCREEN_WIDTH = 350;
+const int BaseTexture::SCREEN_HEIGHT = 625;
+const int BaseTexture::PIPE_SPACE = 160;
+const int BaseTexture::TOTAL_PIPE = 4;
+const int BaseTexture::PIPE_DISTANCE = 220;
+const int BaseTexture::LAND_HEIGHT = 140;
+const int BaseTexture::BIRD_WIDTH = 50;
+const int BaseTexture::BIRD_HEIGHT = 35;
