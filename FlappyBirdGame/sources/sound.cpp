@@ -1,13 +1,15 @@
-#include "../headers/sound.h"
 #include <stdio.h>
 #include <iostream>
 #include <string>
-bool
-sound::init()
+
+#include "../headers/sound.h"
+
+
+bool sound::init()
 {
-    string breath_path = "resources/sound/sfx_breath.wav";
-    string hit_path = "resources/sound/sfx_bonk.wav";
-    string sound_path = "resources/image/sound.png";
+    std::string breath_path = "resources/sound/sfx_breath.wav";
+    std::string hit_path = "resources/sound/sfx_bonk.wav";
+    std::string sound_path = "resources/image/sound.png";
     bool success = true;
     if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
     {
@@ -23,7 +25,7 @@ sound::init()
         if (hit == NULL)
             printf("Failed to load chord! SDL_mixer Error: %s\n", Mix_GetError());
         if (!Load(sound_path))
-        { /* No error */
+        {
         }
         else
         {
@@ -39,7 +41,7 @@ sound::init()
     }
     isPlay = true;
     return success;
-}
+} // Use std::string
 void sound::Free()
 {
     free();

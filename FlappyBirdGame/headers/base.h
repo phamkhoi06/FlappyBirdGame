@@ -1,24 +1,27 @@
 #pragma once
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <string>
 #include <vector>
 #include <stdio.h>
-using namespace std;
+
+
 class position
 {
 public:
     int x, y, angle, state;
     void getPos(const int x, const int y);
 };
+
 class BaseTexture
 {
 public:
     BaseTexture();
     ~BaseTexture() {}
     bool isNULL();
-    bool Load(string path, double scale = 1);
+    bool Load(std::string path, double scale = 1); // Use std::string
     int getWidth();
     int getHeight();
     void free();

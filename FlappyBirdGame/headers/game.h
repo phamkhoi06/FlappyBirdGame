@@ -1,25 +1,19 @@
+/* file: headers/game.h */
 #pragma once
 #include "bird.h"
 #include "pipe.h"
+#include "base.h"
 #include "land.h"
 #include "sound.h"
-#include "base.h"
 #include <string>
 #include <fstream>
 #include <sstream>
-using namespace std;
-class game
-{
+// No 'using namespace std;'
+
+class game {
 public:
-    struct input
-    {
-        enum type
-        {
-            QUIT,
-            PLAY,
-            NONE,
-            PAUSE
-        };
+    struct input {
+        enum type { QUIT, PLAY, NONE, PAUSE };
         type Type;
     };
     input userInput;
@@ -32,14 +26,12 @@ public:
     ~game();
     bool initGraphic();
     void releaseGraphic();
-    bool isQuit();
-    bool isDie();
-    int getPipeWidth();
-    int getPipeHeight();
+    bool isQuit() { return BaseTexture::quit; }
+    bool isDie() { return BaseTexture::die; }
+    int getPipeWidth() { return pipe.width(); }
+    int getPipeHeight() { return pipe.height(); }
     void takeInput();
     void display();
-
-public:
     void renderScoreSmall();
     void renderScoreLarge();
     void renderBestScore();
@@ -58,10 +50,9 @@ public:
     void renderMedal();
     void replay();
     bool checkReplay();
-    void Restart();
-
+    // Update Restart to take theme state
+    void Restart(bool isDark);
 private:
-    void renderScoreDigit(signed char digit, int& currentX, int yPos, bool large, double scale);
     void loadBestScore();
     void saveBestScore();
     const double scaleNumberS;

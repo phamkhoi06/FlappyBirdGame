@@ -1,5 +1,8 @@
 #include "../headers/base.h"
 #include <iostream>
+#include <string>
+
+// Static definitions
 bool BaseTexture::quit = false;
 bool BaseTexture::die = true;
 int BaseTexture::score = 0;
@@ -14,6 +17,7 @@ const int BaseTexture::PIPE_DISTANCE = 220;
 const int BaseTexture::LAND_HEIGHT = 140;
 const int BaseTexture::BIRD_WIDTH = 50;
 const int BaseTexture::BIRD_HEIGHT = 35;
+
 BaseTexture::BaseTexture() { Texture = NULL; }
 int BaseTexture::getWidth() { return tWidth; }
 int BaseTexture::getHeight() { return tHeight; }
@@ -37,7 +41,7 @@ void BaseTexture::Render(int x, int y, int angle, SDL_Rect* clip, SDL_RendererFl
     }
     SDL_RenderCopyEx(gRenderer, Texture, clip, &Rec_Render, angle, NULL, flip);
 }
-bool BaseTexture::Load(string path, double scale)
+bool BaseTexture::Load(std::string path, double scale)
 {
     free();
     SDL_Surface* loadedSurface = IMG_Load(path.c_str());
@@ -62,7 +66,12 @@ bool BaseTexture::Load(string path, double scale)
     }
     return Texture != NULL;
 }
-bool BaseTexture::isNULL() { return Texture == NULL; }
+bool BaseTexture::isNULL()
+{
+    if (Texture == NULL)
+        return true;
+    return false;
+}
 void position::getPos(const int x, const int y)
 {
     this->x = x;

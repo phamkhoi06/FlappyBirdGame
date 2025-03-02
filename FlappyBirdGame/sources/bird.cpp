@@ -1,18 +1,20 @@
-#include "../headers/bird.h"
-#include "../headers/pipe.h"
 #include <stdio.h>
 #include <iostream>
-bool
-Bird::init(bool isDark)
+#include <string>
+
+#include "../headers/bird.h"
+#include "../headers/pipe.h"
+
+
+bool Bird::init(bool isDark)
 {
-    string bird_path = isDark ? "resources/image/bird-dark.png" : "resources/image/bird.png";
+    std::string bird_path = isDark ? "resources/image/bird-dark.png" : "resources/image/bird.png";
     if (saved_path == bird_path && !isNULL())
     {
         posBird.getPos(75, SCREEN_HEIGHT / 2 - BIRD_HEIGHT / 2);
         ahead = 0;
         angle = 0;
         resetTime();
-        return true;
     }
     if (isNULL() || saved_path != bird_path)
     {
@@ -78,24 +80,18 @@ void Bird::update(int pipeWidth, int pipeHeight)
             posBird.y = x0 + time * time * 0.18 - 7.3 * time;
             time++;
         }
-        bool collided = false;
         if (!posPipe.empty() && (posBird.x + getWidth() > posPipe[ahead].x + 5) && (posBird.x + 5 < posPipe[ahead].x + pipeWidth) && (posBird.y + 5 < posPipe[ahead].y + pipeHeight || posBird.y + getHeight() > posPipe[ahead].y + pipeHeight + PIPE_SPACE + 5))
         {
-            collided = true;
-        }
-        if (posBird.y > SCREEN_HEIGHT - LAND_HEIGHT - BIRD_HEIGHT - 5 || posBird.y < -10)
-        {
-            collided = true;
-        }
-        if (collided)
-        {
             die = true;
-            return;
         }
-        if (!posPipe.empty() && posBird.x > posPipe[ahead].x + pipeWidth)
+        else if (!posPipe.empty() && posBird.x > posPipe[ahead].x + pipeWidth)
         {
             ahead = (ahead + 1) % TOTAL_PIPE;
             score++;
+        }
+        if (posBird.y > SCREEN_HEIGHT - LAND_HEIGHT - BIRD_HEIGHT - 5 || posBird.y < -10)
+        {
+            die = true;
         }
     }
 }

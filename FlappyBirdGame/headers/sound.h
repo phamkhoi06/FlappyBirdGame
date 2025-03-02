@@ -1,8 +1,11 @@
-#pragma once
+#pragma 
+
 #include <SDL2/SDL_mixer.h>
 #include <string>
+
 #include "base.h"
-using namespace std;
+
+
 class sound : public BaseTexture
 {
 public:

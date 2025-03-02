@@ -1,13 +1,16 @@
-#include "../headers/land.h"
-#include "../headers/base.h"
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
-bool
-land::init()
+#include <string>
+
+#include "../headers/land.h"
+#include "../headers/base.h"
+
+
+bool land::init()
 {
     posLand.getPos(0, SCREEN_HEIGHT - LAND_HEIGHT);
-    string back_path = "resources/image/land.png";
+    std::string back_path = "resources/image/land.png";
     if (isNULL())
     {
         if (Load(back_path.c_str(), 1))
@@ -16,12 +19,14 @@ land::init()
             return false;
     }
     return true;
-}
+} // Use std::string
 void land::Free() { free(); }
 void land::render()
 {
     if (posLand.x > 0)
+    {
         Render(posLand.x, posLand.y);
+    }
     else if (posLand.x > -SCREEN_WIDTH && posLand.x <= 0)
     {
         Render(posLand.x, posLand.y);

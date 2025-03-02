@@ -1,12 +1,15 @@
-#include "../headers/pipe.h"
-#include "../headers/base.h"
 #include "stdio.h"
 #include <iostream>
 #include <stdlib.h>
 #include <vector>
 #include <time.h>
-vector<position>
-posPipe;
+
+#include "../headers/pipe.h"
+#include "../headers/base.h"
+
+
+std::vector<position> posPipe;
+
 bool pipe::init()
 {
     posPipe.clear();

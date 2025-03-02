@@ -1,7 +1,10 @@
 #pragma once
-#include "base.h"
+
 #include <vector>
-using namespace std;
+
+#include "base.h"
+
+
 class land : public BaseTexture
 {
 public:
