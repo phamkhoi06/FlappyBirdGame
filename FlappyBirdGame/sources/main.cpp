@@ -15,6 +15,7 @@ int main(int argc, char* argv[])
     game game_instance;
     bool isMenu = false;
     bool isPause = false;
+    bool isSound = true;
     bool isDark = false;
     if (game_instance.isQuit())
         return -1;
@@ -23,7 +24,8 @@ int main(int argc, char* argv[])
         frameStart = SDL_GetTicks();
         if (game_instance.isDie())
         {
-            // if (isMenu /* && isSound */) game_instance.sound.playHit();
+            if (isMenu && isSound)
+                game_instance.sound.playHit();
             game_instance.userInput.Type = game::input::NONE;
             while (game_instance.isDie() && !game_instance.isQuit())
             {
@@ -82,11 +84,13 @@ int main(int argc, char* argv[])
             game_instance.takeInput();
             if (game_instance.userInput.Type == game::input::PAUSE)
             {
-                isPause = !isPause;
+                isPause = abs(1 - isPause);
                 game_instance.userInput.Type = game::input::NONE;
-            } // Original used !isPause toggle
+            }
             if (isPause == false && game_instance.userInput.Type == game::input::PLAY)
-            { /* if (isSound) game_instance.sound.playBreath(); */
+            {
+                if (isSound)
+                    game_instance.sound.playBreath();
                 game_instance.bird.resetTime();
                 game_instance.userInput.Type = game::input::NONE;
             }
@@ -111,7 +115,8 @@ int main(int argc, char* argv[])
                 game_instance.renderPauseTab();
                 game_instance.renderScoreSmall();
                 game_instance.renderBestScore();
-                game_instance.replay(); /* game_instance.sound.renderSound(); */
+                game_instance.replay();
+                game_instance.sound.renderSound();
                 if (!isDark)
                     game_instance.lightTheme();
                 else
@@ -125,14 +130,18 @@ int main(int argc, char* argv[])
                         game_instance.Restart();
                         game_instance.pipe.init();
                     }
+                    else if (game_instance.sound.checkSound())
+                    {
+                        isSound = abs(1 - isSound);
+                        game_instance.sound.setPlay(isSound);
+                    }
                     else if (game_instance.changeTheme())
                     {
-                        isDark = !isDark;
+                        isDark = abs(1 - isDark);
                         game_instance.bird.init(isDark);
                     }
                     else
-                    {
-                        isPause = false;
+                    { /* No else resume? */
                     }
                     game_instance.userInput.Type = game::input::NONE;
                 }

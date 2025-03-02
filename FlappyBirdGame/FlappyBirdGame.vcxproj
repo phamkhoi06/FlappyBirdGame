@@ -136,6 +136,7 @@
     <ClCompile Include="sources\land.cpp" />
     <ClCompile Include="sources\main.cpp" />
     <ClCompile Include="sources\pipe.cpp" />
+    <ClCompile Include="sources\sound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitattributes" />
@@ -150,6 +151,7 @@
     <ClInclude Include="headers\game.h" />
     <ClInclude Include="headers\land.h" />
     <ClInclude Include="headers\pipe.h" />
+    <ClInclude Include="headers\sound.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
