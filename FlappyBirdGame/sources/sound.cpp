@@ -41,7 +41,7 @@ bool sound::init()
     }
     isPlay = true;
     return success;
-} // Use std::string
+}
 void sound::Free()
 {
     free();

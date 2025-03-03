@@ -19,9 +19,9 @@ class BaseTexture
 {
 public:
     BaseTexture();
-    ~BaseTexture() {}
+    ~BaseTexture() {};
     bool isNULL();
-    bool Load(std::string path, double scale = 1); // Use std::string
+    bool Load(std::string path, double scale = 1);
     int getWidth();
     int getHeight();
     void free();
