@@ -10,7 +10,7 @@
 bool land::init()
 {
     posLand.getPos(0, SCREEN_HEIGHT - LAND_HEIGHT);
-    std::string back_path = "resources/image/land.png";
+    std::string back_path = "resources/sprites/land.png";
     if (isNULL())
     {
         if (Load(back_path.c_str(), 1))
@@ -19,7 +19,7 @@ bool land::init()
             return false;
     }
     return true;
-} // Use std::string
+}
 void land::Free() { free(); }
 void land::render()
 {
@@ -40,6 +40,5 @@ void land::render()
 }
 void land::update()
 {
-    if (!die)
-        posLand.x -= 3;
+    posLand.x -= 3;
 }

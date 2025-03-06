@@ -9,7 +9,7 @@ bool sound::init()
 {
     std::string breath_path = "resources/sound/sfx_breath.wav";
     std::string hit_path = "resources/sound/sfx_bonk.wav";
-    std::string sound_path = "resources/image/sound.png";
+    std::string sound_path = "resources/sprites/sound.png";
     bool success = true;
     if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
     {

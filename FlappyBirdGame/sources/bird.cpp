@@ -8,7 +8,7 @@
 
 bool Bird::init(bool isDark)
 {
-    std::string bird_path = isDark ? "resources/image/bird-dark.png" : "resources/image/bird.png";
+    std::string bird_path = isDark ? "resources/sprites/bird-dark.png" : "resources/sprites/bird.png";
     if (saved_path == bird_path && !isNULL())
     {
         posBird.getPos(75, SCREEN_HEIGHT / 2 - BIRD_HEIGHT / 2);

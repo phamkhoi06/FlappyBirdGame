@@ -6,6 +6,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
+#include <Windows.h>
 
 #include "../headers/game.h"
 #include "../headers/base.h"
@@ -68,7 +69,6 @@ int main(int argc, char* argv[])
                     game_instance.bird.render();
                     game_instance.bird.fall();
                     game_instance.renderGameOver();
-                    game_instance.renderMedal();
                     game_instance.renderScoreSmall();
                     game_instance.renderBestScore();
                     game_instance.replay();
@@ -97,10 +97,37 @@ int main(int argc, char* argv[])
             isMenu = true;
             game_instance.takeInput();
 
+            //if (game_instance.userInput.Type == game::input::PAUSE)
+            //{
+            //    isPause = abs(1 - isPause);
+            //    game_instance.userInput.Type = game::input::NONE;
+            //}
+
+            //if (isPause == false && game_instance.userInput.Type == game::input::PLAY)
+            //{
+            //    if (isSound)
+            //        game_instance.sound.playBreath();
+            //    game_instance.bird.resetTime();
+            //    game_instance.userInput.Type = game::input::NONE;
+            //}
+
             if (game_instance.userInput.Type == game::input::PAUSE)
             {
                 isPause = abs(1 - isPause);
                 game_instance.userInput.Type = game::input::NONE;
+            }
+
+            if (isPause && game_instance.userInput.Type == game::input::PLAY)
+            {
+                int x, y;
+                SDL_GetMouseState(&x, &y);
+
+                if (x > BaseTexture::SCREEN_WIDTH - 50 && x < BaseTexture::SCREEN_WIDTH - 20 &&
+                    y > 20 && y < 50)
+                {
+                    isPause = false;
+                    game_instance.userInput.Type = game::input::NONE;
+                }
             }
 
             if (isPause == false && game_instance.userInput.Type == game::input::PLAY)
@@ -108,6 +135,7 @@ int main(int argc, char* argv[])
                 if (isSound)
                     game_instance.sound.playBreath();
                 game_instance.bird.resetTime();
+                game_instance.bird.flap();
                 game_instance.userInput.Type = game::input::NONE;
             }
 
@@ -171,4 +199,9 @@ int main(int argc, char* argv[])
         }
     }
     return 0;
+}
+
+int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+	return main(__argc, __argv);
 }
