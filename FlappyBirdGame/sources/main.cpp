@@ -1,6 +1,7 @@
-#define SDL_MAIN_HANDLED 
+#define SDL_MAIN_HANDLED
 
-#include "../headers/base.h" 
+#include "../headers/base.h"
+#include "../headers/bird.h" 
 #include <SDL2/SDL.h>
 #include <iostream>
 
@@ -9,20 +10,24 @@ const int frameDelay = 1000 / FPS;
 
 int main(int argc, char* argv[])
 {
-
     if (!BaseTexture::initGraphic()) {
         printf("Failed to initialize graphics!\n");
+        return -1;
+    }
+
+    Bird gameBird;
+    if (!gameBird.init()) {
+        printf("Failed to initialize bird!\n");
+        BaseTexture::releaseGraphic();
         return -1;
     }
 
     Uint32 frameStart;
     int frameTime;
 
-
     while (!BaseTexture::quit)
     {
         frameStart = SDL_GetTicks();
-
 
         while (SDL_PollEvent(&BaseTexture::event) != 0)
         {
@@ -34,11 +39,13 @@ int main(int argc, char* argv[])
         }
 
 
-        SDL_SetRenderDrawColor(BaseTexture::gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        gameBird.update();
+
+
+        SDL_SetRenderDrawColor(BaseTexture::gRenderer, 135, 206, 235, 0xFF);
         SDL_RenderClear(BaseTexture::gRenderer);
 
-
-
+        gameBird.render();
 
         SDL_RenderPresent(BaseTexture::gRenderer);
 
@@ -50,7 +57,7 @@ int main(int argc, char* argv[])
         }
     }
 
-
+    gameBird.Free();
     BaseTexture::releaseGraphic();
 
     return 0;

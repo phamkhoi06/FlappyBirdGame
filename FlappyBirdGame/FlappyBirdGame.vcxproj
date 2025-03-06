@@ -130,7 +130,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="sources\Source.cpp" />
+    <ClCompile Include="sources\base.cpp" />
+    <ClCompile Include="sources\bird.cpp" />
+    <ClCompile Include="sources\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitattributes" />
@@ -138,6 +140,10 @@
     <None Include="..\README.md" />
     <None Include="..\vcpkg-configuration.json" />
     <None Include="..\vcpkg.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="headers\base.h" />
+    <ClInclude Include="headers\bird.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
