@@ -2,7 +2,6 @@
 
 #include "base.h"
 
-
 using namespace std;
 
 class Bird : public BaseTexture
@@ -12,22 +11,16 @@ public:
     ~Bird() { Free(); }
 
     bool init(bool isDark = false);
-
     void render();
-
     void Free();
-
-    void resetTime();
-
-    void fall();
-
+    void flap();
+    void applyGravity();
     void update(int pipeWidth = 0, int pipeHeight = 0);
+
+
+    position posBird;
 
 private:
     int angle;
     double velocityY;
-
-
-
-    position posBird;
 };
