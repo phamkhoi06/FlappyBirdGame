@@ -11,11 +11,11 @@ Flap. Soar. Conquer.
 ## Screenshots
 
 <div style="display: flex; gap: 20px;">
-  <a href="./Screenshots/img1.png">
-    <img src="./Screenshots/img1.png" alt="Screenshot 1" width="300">
+  <a href="Screenshots/img1.png">
+    <img src="Screenshots/img1.png" alt="Screenshot 1" width="300">
   </a>
-  <a href="./Screenshots/img2.png">
-    <img src="./Screenshots/img2.png" alt="Screenshot 2" width="300">
+  <a href="Screenshots/img2.png">
+    <img src="Screenshots/img2.png" alt="Screenshot 2" width="300">
   </a>
 </div>
 
@@ -130,7 +130,7 @@ The game follows a typical game loop structure:
 - **Game Concept**: Inspired by the original Flappy Bird game by Nguyen Thanh Dong.
 - **Graphics**: https://github.com/samuelcust/flappy-bird-assets.
 - **Audio**: https://1144ghost.itch.io/cozy-winter-music
-- **Font**: 
+- **Font**: https://www.dafont.com/04b-19.font
 - **Assistance**: ChatGPT-4o and Claude 3.7 sonnet
 
 ## License
