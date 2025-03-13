@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-#include "../headers/sound.h"
+#include "../headers/Sound.h"
 
 
 bool sound::init()

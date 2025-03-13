@@ -3,8 +3,8 @@
 #include <vector>
 #include <ctime>
 
-#include "../headers/base.h"
-#include "../headers/pipe.h"
+#include "../headers/Base.h"
+#include "../headers/Pipe.h"
 
 
 std::vector<position> posPipe;

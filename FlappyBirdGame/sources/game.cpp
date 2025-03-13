@@ -5,8 +5,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "../headers/game.h"
-#include "../headers/base.h"
+#include "../headers/Game.h"
+#include "../headers/Base.h"
 
 
 game::game() : scaleNumberS(0.75), bestScore(0)
@@ -162,7 +162,7 @@ void game::renderScoreSmall()
         std::string path = "resources/sprites/number/small/";
         path += std::to_string(number) + ".png";
         image.Load(path, scaleNumberS);
-        //image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1), 268);
+        //image.Render((BaseTexture::SCREEN_WIDTH - (image.getWidth() * len + (len - 1) * 10)) / 2 + (i + 30) * i, 100);
         image.Render((BaseTexture::SCREEN_WIDTH - totalWidth) / 2, 268);
         image.free();
     }
@@ -179,7 +179,8 @@ void game::renderScoreLarge()
         std::string path = "resources/sprites/number/large/";
         path += std::to_string(number) + ".png";
         image.Load(path, 1);
-        image.Render((BaseTexture::SCREEN_WIDTH - (image.getWidth() * len + (len - 1) * 10)) / 2 + (i * (image.getWidth() + 10)), 100);
+        //image.Render((BaseTexture::SCREEN_WIDTH - (image.getWidth() * len + (len - 1) * 10)) / 2 + (i * (image.getWidth() + 10)), 100);
+        image.Render((BaseTexture::SCREEN_WIDTH - (image.getWidth() * len + (len - 1) * 10)) / 2 + (i + 30) * i, 100);
         image.free();
     }
 }
@@ -295,17 +296,10 @@ void game::renderPauseTab()
     image.Render((BaseTexture::SCREEN_WIDTH - image.getWidth()) / 2, 230);
     image.free();
 }
-void game::lightTheme()
+void game::birdImage()
 {
     BaseTexture image;
     image.Load("resources/sprites/bird.png", 0.8);
-    image.Render(105, 315);
-    image.free();
-}
-void game::darkTheme()
-{
-    BaseTexture image;
-    image.Load("resources/sprites/bird-dark.png", 0.8);
     image.Render(105, 315);
     image.free();
 }
@@ -356,10 +350,10 @@ bool game::checkReplay()
     return false;
 }
 
-void game::Restart(bool isDark)
+void game::Restart()
 {
     BaseTexture::die = false;
     BaseTexture::score = 0;
-    bird.init(isDark);
+    bird.init();
     pipe.init();
 }

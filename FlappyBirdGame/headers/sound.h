@@ -3,7 +3,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <string>
 
-#include "base.h"
+#include "Base.h"
 
 
 class sound : public BaseTexture

@@ -4,11 +4,11 @@
 #include <fstream>
 #include <sstream>
 
-#include "bird.h"
-#include "pipe.h"
-#include "base.h"
-#include "land.h"
-#include "sound.h"
+#include "Bird.h"
+#include "Pipe.h"
+#include "Base.h"
+#include "Land.h"
+#include "Sound.h"
 
 
 class game
@@ -52,14 +52,13 @@ public:
     void resume();
     void pause();
     void renderPauseTab();
-    void lightTheme();
-    void darkTheme();
+    void birdImage();
     void nextButton();
     bool changeTheme();
     void renderGameOver();
     void replay();
     bool checkReplay();
-    void Restart(bool isDark);
+    void Restart();
 
 private:
     void loadBestScore();
