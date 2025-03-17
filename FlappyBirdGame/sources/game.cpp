@@ -163,7 +163,7 @@ void game::renderScoreSmall()
         path += std::to_string(number) + ".png";
         image.Load(path, scaleNumberS);
         //image.Render((BaseTexture::SCREEN_WIDTH - (image.getWidth() * len + (len - 1) * 10)) / 2 + (i + 30) * i, 100);
-        image.Render((BaseTexture::SCREEN_WIDTH - totalWidth) / 2, 268);
+        image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1), 268);
         image.free();
     }
 }
@@ -188,7 +188,7 @@ void game::renderScoreLarge()
 void game::renderBestScore()
 {
     loadBestScore();
-    std::ofstream fileOut("resources/data/bestScore.txt", std::ios::trunc);
+    std::ofstream fileOut("resources/data/bestscore.txt", std::ios::trunc);
     if (BaseTexture::score > bestScore)
     {
         bestScore = BaseTexture::score;
@@ -219,7 +219,8 @@ void game::renderBestScore()
         path += std::to_string(number) + ".png";
         image.Load(path, scaleNumberS);
         //image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1), 315);
-        image.Render((BaseTexture::SCREEN_WIDTH - totalWidth) / 2, 315);
+        //image.Render((BaseTexture::SCREEN_WIDTH - totalWidth) / 2, 315);
+        image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1), 315);
         image.free();
     }
     if (fileOut.is_open())
@@ -267,13 +268,6 @@ void game::renderBackground()
     image.Render(0, 0);
     image.free();
 }
-void game::renderBackgroundNight()
-{
-    BaseTexture image;
-    image.Load("resources/sprites/background-night.png", 1);
-    image.Render(0, 0);
-    image.free();
-}
 void game::renderLand() {}
 void game::resume()
 {
@@ -302,23 +296,6 @@ void game::birdImage()
     image.Load("resources/sprites/bird.png", 0.8);
     image.Render(105, 315);
     image.free();
-}
-void game::nextButton()
-{
-    BaseTexture image;
-    image.Load("resources/sprites/nextRight.png", 1);
-    image.Render(149, 322);
-    image.Load("resources/sprites/nextLeft.png", 1);
-    image.Render(88, 322);
-    image.free();
-}
-bool game::changeTheme()
-{
-    int x, y;
-    SDL_GetMouseState(&x, &y);
-    if (((x > 149 && x < 149 + 13) || (x > 88 && x < 88 + 13)) && (y > 322 && y < 322 + 16))
-        return true;
-    return false;
 }
 void game::renderGameOver()
 {

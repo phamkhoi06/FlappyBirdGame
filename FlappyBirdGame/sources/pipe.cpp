@@ -33,7 +33,7 @@ bool pipe::init()
         int yPos = (randMax_actual > randMin_actual)
             ? (rand() % (randMax_actual - randMin_actual + 1)) + randMin_actual
             : (BaseTexture::SCREEN_HEIGHT / 2 - BaseTexture::PIPE_SPACE / 2 - pipeTextureHeight);
-        temp.getPos(BaseTexture::SCREEN_WIDTH + i * BaseTexture::PIPE_DISTANCE + 350, yPos);
+        temp.setPos(BaseTexture::SCREEN_WIDTH + i * BaseTexture::PIPE_DISTANCE + 350, yPos);
         posPipe.push_back(temp);
     }
     return !isNULL();

@@ -11,7 +11,7 @@ bool Bird::init()
     std::string bird_path = "resources/sprites/bird.png";
     if (saved_path == bird_path && !isNULL())
     {
-        posBird.getPos(75, SCREEN_HEIGHT / 2 - BIRD_HEIGHT / 2);
+        posBird.setPos(75, SCREEN_HEIGHT / 2 - BIRD_HEIGHT / 2);
         ahead = 0;
         angle = 0;
         resetTime();
@@ -21,7 +21,7 @@ bool Bird::init()
         saved_path = bird_path;
         if (Load(bird_path.c_str(), 1))
         {
-            posBird.getPos(75, SCREEN_HEIGHT / 2 - BIRD_HEIGHT / 2);
+            posBird.setPos(75, SCREEN_HEIGHT / 2 - BIRD_HEIGHT / 2);
             ahead = 0;
             angle = 0;
             resetTime();

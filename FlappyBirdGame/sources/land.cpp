@@ -9,7 +9,7 @@
 
 bool land::init()
 {
-    posLand.getPos(0, SCREEN_HEIGHT - LAND_HEIGHT);
+    posLand.setPos(0, SCREEN_HEIGHT - LAND_HEIGHT);
     std::string back_path = "resources/sprites/land.png";
     if (isNULL())
     {
@@ -34,7 +34,7 @@ void land::render()
     }
     else
     {
-        posLand.getPos(0, SCREEN_HEIGHT - LAND_HEIGHT);
+        posLand.setPos(0, SCREEN_HEIGHT - LAND_HEIGHT);
         Render(posLand.x, posLand.y);
     }
 }
