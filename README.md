@@ -46,6 +46,38 @@ After downloading, extract the contents and run the executable file to start pla
 
 ## Building
 
+> [!NOTE]
+> The launcher project is for chainload the main executable in ./bin folder cause massive of DLL files.
+
+The built project structure is as follows:
+```
+Folder PATH listing for volume Data
+Volume serial number is EE5B-78F0
+D:\WORKSPACE\VISUAL STUDIO 2022\SOURCE\REPOS\FLAPPYBIRDGAME\BUILD
+│
+│   launcher.exe
+│
+├───bin
+│       brotlicommon.dll
+│       brotlidec.dll
+│       bz2.dll
+│       FlappyBirdGame.exe
+│       freetype.dll
+│       launcher.exe
+│       libpng16.dll
+│       ogg.dll
+│       SDL2.dll
+│       SDL2_image.dll
+│       SDL2_mixer.dll
+│       SDL2_ttf.dll
+│       vorbis.dll
+│       vorbisfile.dll
+│       wavpackdll.dll
+│       zlib1.dll
+│
+└───resources (As the name suggests, this folder contains all the resources)
+```
+
 1. Clone the repository:
 ```
 git clone https://github.com/phamkhoi06/FlappyBirdGame.git
