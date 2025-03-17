@@ -12,7 +12,7 @@ class position
 {
 public:
     int x, y, angle, state;
-    void getPos(const int x, const int y);
+    void setPos(const int x, const int y);
 };
 
 class BaseTexture
