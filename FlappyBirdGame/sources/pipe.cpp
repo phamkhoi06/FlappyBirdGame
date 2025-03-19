@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <vector>
+#include <time.h>
 vector<position>
 posPipe;
 bool pipe::init()
@@ -25,7 +26,7 @@ bool pipe::init()
         posPipe.push_back(temp);
     }
     return true;
-} // Updated resource path
+}
 void pipe::Free()
 {
     free();

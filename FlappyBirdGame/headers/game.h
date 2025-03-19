@@ -25,17 +25,38 @@ public:
     Bird bird;
     pipe pipe;
     land land;
+
 public:
     game();
     ~game();
-    void takeInput();
-    void update();
-    void render();
-    void display();
+    bool initGraphic();
+    void releaseGraphic();
     bool isQuit();
     bool isDie();
     int getPipeWidth();
     int getPipeHeight();
+    void takeInput();
+    void display();
+
+public:
+    void renderScoreSmall();
+    void renderScoreLarge();
+    void renderBestScore();
+    void renderMessage();
+    void renderBackground();
+    void renderBackgroundNight();
+    void renderLand();
+    void resume();
+    void pause();
+    void renderPauseTab();
+    void lightTheme();
+    void darkTheme();
+    void nextButton();
+    bool changeTheme();
+    void renderGameOver();
+    void renderMedal();
+    void replay();
+    bool checkReplay();
     void Restart();
 
 private:

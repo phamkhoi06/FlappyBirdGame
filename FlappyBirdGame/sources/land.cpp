@@ -2,7 +2,7 @@
 #include "../headers/base.h"
 #include <stdio.h>
 #include <iostream>
-
+#include <stdlib.h>
 bool
 land::init()
 {
@@ -14,7 +14,7 @@ land::init()
     }
     posLand.getPos(0, BaseTexture::SCREEN_HEIGHT - getHeight());
     return true;
-} // Updated resource path
+}
 void land::Free() { free(); }
 void land::render()
 {
