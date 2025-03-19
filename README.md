@@ -17,13 +17,6 @@ Flap. Soar. Conquer.
   <a href="Screenshots/img2.png">
     <img src="Screenshots/img2.png" alt="Screenshot 2" width="300">
   </a>
-  <br>
-    <a href="Screenshots/img3.png">
-    <img src="Screenshots/img3.png" alt="Screenshot 2" width="300">
-  </a>
-      <a href="Screenshots/img4.png">
-    <img src="Screenshots/img4.png" alt="Screenshot 2" width="300">
-  </a>
 </div>
 
 
@@ -36,7 +29,6 @@ Flap. Soar. Conquer.
 - Score tracking with personal best
 - Smooth physics-based bird movement
 - Randomly generated pipe obstacles
-
 
 ## Requirements
 
@@ -169,7 +161,7 @@ The game follows a typical game loop structure:
 - **Game Concept**: Inspired by the original Flappy Bird game by Nguyen Thanh Dong.
 - **Graphics**: https://github.com/samuelcust/flappy-bird-assets.
 - **Audio**: https://1144ghost.itch.io/cozy-winter-music
-- **Font**: https://www.dafont.com/04b-19.font
+- **Font**: https://www.dafont.com/press-start-2p.font
 - **Assistance**: ChatGPT-4o and Claude 3.7 sonnet
 
 ## License
