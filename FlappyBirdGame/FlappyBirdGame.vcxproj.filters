@@ -41,11 +41,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\.gitignore" />
-    <None Include="..\README.md" />
-    <None Include="..\vcpkg.json" />
-    <None Include="..\vcpkg-configuration.json" />
-    <None Include="..\.gitattributes" />
     <None Include="FlappyBirdGame.aps">
       <Filter>Resource Files</Filter>
     </None>
@@ -82,5 +77,8 @@
     <Image Include="resources\favicon.ico">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
 </Project>

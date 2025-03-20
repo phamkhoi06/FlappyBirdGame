@@ -230,11 +230,6 @@ XCOPY /Y /E /D "$(ProjectDir)resources\*" "%BuildDir%\resources\"</Command>
     <ClCompile Include="sources\Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\.gitattributes" />
-    <None Include="..\.gitignore" />
-    <None Include="..\README.md" />
-    <None Include="..\vcpkg-configuration.json" />
-    <None Include="..\vcpkg.json" />
     <None Include="FlappyBirdGame.aps" />
   </ItemGroup>
   <ItemGroup>
@@ -251,6 +246,9 @@ XCOPY /Y /E /D "$(ProjectDir)resources\*" "%BuildDir%\resources\"</Command>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
