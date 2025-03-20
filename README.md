@@ -32,7 +32,7 @@ Flap. Soar. Conquer.
 
 ## Requirements
 
-- C++ compiler with C++11 support
+- C++ compiler with C++17 support
 - SDL2 library
 - SDL2_image for texture loading
 - SDL2_mixer for audio
@@ -43,16 +43,16 @@ Flap. Soar. Conquer.
 Go to our [Latest Release](https://github.com/phamkhoi06/FlappyBirdGame/releases/latest) page and download your preferred variant.
 After downloading, extract the contents and run the executable file to start playing.
 
+Or you can build the project from source code as following.
+
 ## Building
 
+### Visual Studio IDE (Recommended)
 > [!NOTE]
-> The launcher project is for chainload the main executable in ./bin folder cause massive of DLL files.
+> The launcher project is for chainload the main executable in ./bin folder cause massive of DLL files when using `Release - Dynamic Linking` configuration.
 
 The built project structure is as follows:
 ```
-Folder PATH listing for volume Data
-Volume serial number is EE5B-78F0
-D:\WORKSPACE\VISUAL STUDIO 2022\SOURCE\REPOS\FLAPPYBIRDGAME\BUILD
 │
 │   launcher.exe
 │
@@ -90,6 +90,22 @@ cd FlappyBirdGame
 ./flappy-bird.exe
 ```
 
+### Using CMake
+1. Clone the repository:
+```
+git clone https://github.com/phamkhoi06/FlappyBirdGame.git
+cd FlappyBirdGame
+```
+
+2. Make sure you have all the required SDL2 libraries installed
+3. Generate the build files using CMake acording to your 
+```cmake
+cmake -S . -B build
+```
+4. Build the project:
+```cmake
+cmake --build build
+```
 
 ## How to Play
 
@@ -131,7 +147,7 @@ The game follows a typical game loop structure:
 #### Game Flow and State Management
 
 1. **Main Loop Control**: The `main.cpp` contains the primary game loop that manages frame timing and delegates control to the game instance
-2. **State Flags**: The game uses state flags like `isMenu`, `isPause`, `isDark`, and `isSound` to control game behavior
+2. **State Flags**: The game uses state flags like `isMenu`, `isPause`, `isSound` to control game behavior
 
 #### Input Handling and Game Events
 
@@ -157,12 +173,13 @@ The game follows a typical game loop structure:
 3. **Game Restart**: The `game::Restart` method resets all game elements to their initial state
 
 ## Acknowledgements
-
+- **Game Engine**: SDL2 (Simple DirectMedia Layer 2) and those who contributed to it.
 - **Game Concept**: Inspired by the original Flappy Bird game by Nguyen Thanh Dong.
 - **Graphics**: https://github.com/samuelcust/flappy-bird-assets.
-- **Audio**: https://1144ghost.itch.io/cozy-winter-music
-- **Font**: https://www.dafont.com/press-start-2p.font
-- **Assistance**: ChatGPT-4o and Claude 3.7 sonnet
+- **Audio**: https://1144ghost.itch.io/cozy-winter-music.
+- **Font**: https://www.dafont.com/press-start-2p.font.
+- **Assistance**: ChatGPT-4o and Claude 3.7 sonnet.
+- **Solution Converter**: https://github.com/pavelliavonau/cmakeconverter for a better CMake support and compatibility.
 
 ## License
 This project is open-source and available under the MIT License.
