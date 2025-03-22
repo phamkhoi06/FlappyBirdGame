@@ -6,31 +6,35 @@
 bool
 land::init()
 {
-    string land_path = "resources/image/land.png";
-    if (!Load(land_path.c_str(), 1.0))
+    posLand.getPos(0, SCREEN_HEIGHT - LAND_HEIGHT);
+    string back_path = "resources/image/land.png";
+    if (isNULL())
     {
-        printf("Failed to load land texture!\n");
-        return false;
+        if (Load(back_path.c_str(), 1))
+            return true;
+        else
+            return false;
     }
-    posLand.getPos(0, BaseTexture::SCREEN_HEIGHT - getHeight());
     return true;
 }
 void land::Free() { free(); }
 void land::render()
 {
-    int currentX = posLand.x;
-    Render(currentX, posLand.y);
-    Render(currentX + getWidth(), posLand.y);
+    if (posLand.x > 0)
+        Render(posLand.x, posLand.y);
+    else if (posLand.x > -SCREEN_WIDTH && posLand.x <= 0)
+    {
+        Render(posLand.x, posLand.y);
+        Render(posLand.x + SCREEN_WIDTH, posLand.y, 0, NULL);
+    }
+    else
+    {
+        posLand.getPos(0, SCREEN_HEIGHT - LAND_HEIGHT);
+        Render(posLand.x, posLand.y);
+    }
 }
 void land::update()
 {
-    if (!BaseTexture::die)
-    {
-        const int LAND_SPEED = 3;
-        posLand.x -= LAND_SPEED;
-        if (posLand.x <= -getWidth())
-        {
-            posLand.x = 0;
-        }
-    }
+    if (!die)
+        posLand.x -= 3;
 }

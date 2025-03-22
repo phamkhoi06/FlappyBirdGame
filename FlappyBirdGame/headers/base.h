@@ -6,24 +6,23 @@
 #include <vector>
 #include <stdio.h>
 using namespace std;
-class BaseTexture;
 class position
 {
 public:
-    int x = 0, y = 0, angle = 0, state = 0;
+    int x, y, angle, state;
     void getPos(const int x, const int y);
 };
 class BaseTexture
 {
 public:
     BaseTexture();
-    virtual ~BaseTexture() { free(); }
-    virtual bool Load(string path, double scale = 1);
-    virtual void Render(int x, int y, int angle = 0, SDL_Rect* clip = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
-    virtual void free();
-    virtual int getWidth();
-    virtual int getHeight();
-    virtual bool isNULL();
+    ~BaseTexture() {}
+    bool isNULL();
+    bool Load(string path, double scale = 1);
+    int getWidth();
+    int getHeight();
+    void free();
+    void Render(int x, int y, int angle = 0, SDL_Rect* clip = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 public:
     SDL_Texture* Texture;

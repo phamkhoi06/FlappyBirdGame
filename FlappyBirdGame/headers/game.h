@@ -24,8 +24,7 @@ public:
     input userInput;
     Bird bird;
     pipe pipe;
-    land land;
-
+    land land; // sound sound;
 public:
     game();
     ~game();
@@ -60,4 +59,9 @@ public:
     void Restart();
 
 private:
+    void renderScoreDigit(signed char digit, int& currentX, int yPos, bool large, double scale);
+    void loadBestScore();
+    void saveBestScore();
+    const double scaleNumberS;
+    int bestScore;
 };

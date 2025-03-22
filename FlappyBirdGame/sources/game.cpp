@@ -4,7 +4,7 @@
 #include <time.h>
 #include <string>
 #include <fstream>
-game::game()
+game::game() : scaleNumberS(0.75), bestScore(0)
 {
     srand(time(NULL));
     if (!initGraphic())
@@ -15,9 +15,11 @@ game::game()
     pipe.init();
     land.init();
     userInput.Type = input::NONE;
+    loadBestScore();
 }
 game::~game()
 {
+    saveBestScore();
     bird.Free();
     pipe.Free();
     land.Free();
@@ -36,6 +38,10 @@ void game::takeInput()
         else if (BaseTexture::event.type == SDL_MOUSEBUTTONDOWN || (BaseTexture::event.type == SDL_KEYDOWN && (BaseTexture::event.key.keysym.sym == SDLK_SPACE || BaseTexture::event.key.keysym.sym == SDLK_UP) && BaseTexture::event.key.repeat == 0))
         {
             userInput.Type = input::PLAY;
+        }
+        else if (BaseTexture::event.type == SDL_KEYDOWN && BaseTexture::event.key.keysym.sym == SDLK_ESCAPE && BaseTexture::event.key.repeat == 0)
+        {
+            userInput.Type = input::PAUSE;
         }
     }
 }
@@ -96,92 +102,218 @@ void game::releaseGraphic()
     IMG_Quit();
     SDL_Quit();
 }
-void game::update()
+void game::display()
 {
-    bool wasAlive = !isDie();
-    if (wasAlive)
-    {
-        if (userInput.Type == input::PLAY)
-            bird.flap();
-        pipe.update();
-        land.update();
-    }
-    bird.update(getPipeWidth(), getPipeHeight());
-    if (wasAlive && isDie())
-        printf("--- GAME OVER ---\n");
-}
-void game::render()
-{
-    SDL_SetRenderDrawColor(BaseTexture::gRenderer, 135, 206, 235, 0xFF);
+    SDL_RenderPresent(BaseTexture::gRenderer);
     SDL_RenderClear(BaseTexture::gRenderer);
-    pipe.render();
-    land.render();
-    bird.render();
-    if (!isDie())
-    {
-        renderScoreLarge();
-    }
 }
-void game::display() { SDL_RenderPresent(BaseTexture::gRenderer); }
 bool game::isQuit() { return BaseTexture::quit; }
 bool game::isDie() { return BaseTexture::die; }
+int game::getPipeWidth() { return pipe.width(); }
+int game::getPipeHeight() { return pipe.height(); }
 void game::Restart()
 {
     BaseTexture::die = false;
     BaseTexture::score = 0;
-    bird.init(false);
-    pipe.init();
-    userInput.Type = input::NONE;
+    bird.resetTime();
 }
-int game::getPipeWidth() { return pipe.width(); }
-int game::getPipeHeight() { return pipe.height(); }
+void game::renderScoreDigit(signed char digit, int& currentX, int yPos, bool large, double scale)
+{
+    BaseTexture image;
+    string sizeStr = large ? "large" : "small";
+    string digitPath = "resources/number/" + sizeStr + "/" + to_string(digit) + ".png";
+    const int Kern = large ? 2 : 1;
+    if (image.Load(digitPath, scale))
+    {
+        image.Render(currentX, yPos);
+        currentX += image.getWidth() + Kern;
+        image.free();
+    }
+    else
+    {
+        int phW = large ? 24 : 18;
+        currentX += phW * scale + Kern;
+    }
+}
 void game::renderScoreLarge()
 {
     string s = to_string(BaseTexture::score);
     signed char len = s.length();
     BaseTexture image;
-    int digitWidth = 0, Kern = 2, totalWidth = 0;
-    if (len > 0)
-    {
-        image.Load("resources/number/large/0.png", 1.0);
-        digitWidth = image.getWidth();
-        image.free();
-    }
-    if (digitWidth <= 0 && len > 0)
-        return;
-    totalWidth = (digitWidth * len) + (Kern * (len > 0 ? len - 1 : 0));
-    int currentX = (BaseTexture::SCREEN_WIDTH - totalWidth) / 2;
-    const int ScoreY = 100;
     for (signed char i = 0; i < len; i++)
     {
         signed char number = s[i] - '0';
-        string digitPath = "resources/number/large/" + string(1, s[i]) + ".png";
-        if (image.Load(digitPath, 1.0))
-        {
-            image.Render(currentX, ScoreY);
-            currentX += image.getWidth() + Kern;
-            image.free();
-        }
-        else
-        {
-            currentX += digitWidth + Kern;
-        }
+        string path = "resources/number/large/" + to_string(number) + ".png";
+        image.Load(path, 1);
+        image.Render((BaseTexture::SCREEN_WIDTH - (image.getWidth() * len + (len - 1) * 10)) / 2 + (i * (image.getWidth() + 10)), 100);
+        image.free();
     }
 }
-void game::renderScoreSmall() {}
-void game::renderBestScore() {}
-void game::renderMessage() {}
-void game::renderBackground() {}
-void game::renderBackgroundNight() {}
+void game::renderScoreSmall()
+{
+    string s = to_string(BaseTexture::score);
+    signed char len = s.length();
+    BaseTexture image;
+    for (signed char i = len - 1; i >= 0; i--)
+    {
+        signed char number = s[i] - '0';
+        string path = "resources/number/small/" + to_string(number) + ".png";
+        image.Load(path, scaleNumberS);
+        image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1), 268);
+        image.free();
+    }
+}
+void game::loadBestScore()
+{
+    ifstream fileIn("resources/data/bestScore.txt");
+    if (fileIn.is_open())
+        fileIn >> bestScore;
+    else
+        bestScore = 0;
+    fileIn.close();
+}
+void game::saveBestScore()
+{
+    ofstream fileOut("resources/data/bestScore.txt", ios::trunc);
+    if (fileOut.is_open())
+        fileOut << bestScore;
+    fileOut.close();
+}
+void game::renderBestScore()
+{
+    loadBestScore();
+    ofstream fileOut("resources/data/bestScore.txt", ios::trunc);
+    if (BaseTexture::score > bestScore)
+        bestScore = BaseTexture::score;
+    string s = to_string(bestScore);
+    signed char len = s.length();
+    BaseTexture image;
+    for (signed char i = len - 1; i >= 0; i--)
+    {
+        signed char number = s[i] - '0';
+        string path = "resources/number/small/" + to_string(number) + ".png";
+        image.Load(path, scaleNumberS);
+        image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1), 315);
+        image.free();
+    }
+    if (fileOut.is_open())
+        fileOut << bestScore;
+    fileOut.close();
+}
+void game::renderMessage()
+{
+    BaseTexture image;
+    image.Load("resources/image/message.png", 1);
+    image.Render((BaseTexture::SCREEN_WIDTH - image.getWidth()) / 2, 180);
+    image.free();
+}
+void game::renderBackground()
+{
+    BaseTexture image;
+    image.Load("resources/image/background.png", 1);
+    image.Render(0, 0);
+    image.free();
+}
+void game::renderBackgroundNight()
+{
+    BaseTexture image;
+    image.Load("resources/image/background-night.png", 1);
+    image.Render(0, 0);
+    image.free();
+}
 void game::renderLand() {}
-void game::resume() {}
-void game::pause() {}
-void game::renderPauseTab() {}
-void game::lightTheme() {}
-void game::darkTheme() {}
-void game::nextButton() {}
-bool game::changeTheme() { return false; }
-void game::renderGameOver() {}
-void game::renderMedal() {}
-void game::replay() {}
-bool game::checkReplay() { return false; }
+void game::resume()
+{
+    BaseTexture image;
+    image.Load("resources/image/resume.png", 1);
+    image.Render(BaseTexture::SCREEN_WIDTH - 50, 20);
+    image.free();
+}
+void game::pause()
+{
+    BaseTexture image;
+    image.Load("resources/image/pause.png", 1);
+    image.Render(BaseTexture::SCREEN_WIDTH - 50, 20);
+    image.free();
+}
+void game::renderPauseTab()
+{
+    BaseTexture image;
+    image.Load("resources/image/pauseTab.png", 1);
+    image.Render((BaseTexture::SCREEN_WIDTH - image.getWidth()) / 2, 230);
+    image.free();
+}
+void game::lightTheme()
+{
+    BaseTexture image;
+    image.Load("resources/image/bird.png", 0.8);
+    image.Render(105, 315);
+    image.free();
+}
+void game::darkTheme()
+{
+    BaseTexture image;
+    image.Load("resources/image/bird-dark.png", 0.8);
+    image.Render(105, 315);
+    image.free();
+}
+void game::nextButton()
+{
+    BaseTexture image;
+    image.Load("resources/image/nextRight.png", 1);
+    image.Render(149, 322);
+    image.Load("resources/image/nextLeft.png", 1);
+    image.Render(88, 322);
+    image.free();
+}
+bool game::changeTheme()
+{
+    int x, y;
+    SDL_GetMouseState(&x, &y);
+    if (((x > 149 && x < 149 + 13) || (x > 88 && x < 88 + 13)) && (y > 322 && y < 322 + 16))
+        return true;
+    return false;
+}
+void game::renderGameOver()
+{
+    BaseTexture image;
+    image.Load("resources/image/gameOver.png", 1);
+    image.Render((BaseTexture::SCREEN_WIDTH - image.getWidth()) / 2, 150);
+    image.free();
+}
+void game::renderMedal()
+{
+    BaseTexture image;
+    string medalPath = "resources/medal/";
+    if (BaseTexture::score > 50)
+        medalPath += "gold.png";
+    else if (BaseTexture::score > 20)
+        medalPath += "silver.png";
+    else
+        medalPath += "honor.png";
+    image.Load(medalPath, scaleNumberS);
+    image.Render(82, 275);
+    image.free();
+}
+void game::replay()
+{
+    BaseTexture image;
+    image.Load("resources/image/replay.png", 1);
+    image.Render((BaseTexture::SCREEN_WIDTH - image.getWidth()) / 2, 380);
+    image.free();
+}
+bool game::checkReplay()
+{
+    int x, y;
+    SDL_GetMouseState(&x, &y);
+    BaseTexture image;
+    image.Load("resources/image/replay.png", 1);
+    int w = image.getWidth();
+    int h = image.getHeight();
+    image.free();
+    int btnX = (BaseTexture::SCREEN_WIDTH - w) / 2;
+    int btnY = 380;
+    if (x > btnX && x < btnX + w && y > btnY && y < btnY + h)
+        return true;
+    return false;
+}

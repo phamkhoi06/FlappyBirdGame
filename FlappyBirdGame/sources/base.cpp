@@ -1,8 +1,7 @@
 #include "../headers/base.h"
 #include <iostream>
-
 bool BaseTexture::quit = false;
-bool BaseTexture::die = false;
+bool BaseTexture::die = true;
 int BaseTexture::score = 0;
 SDL_Window* BaseTexture::gWindow = NULL;
 SDL_Renderer* BaseTexture::gRenderer = NULL;
@@ -15,12 +14,7 @@ const int BaseTexture::PIPE_DISTANCE = 220;
 const int BaseTexture::LAND_HEIGHT = 140;
 const int BaseTexture::BIRD_WIDTH = 50;
 const int BaseTexture::BIRD_HEIGHT = 35;
-BaseTexture::BaseTexture()
-{
-    Texture = NULL;
-    tWidth = 0;
-    tHeight = 0;
-}
+BaseTexture::BaseTexture() { Texture = NULL; }
 int BaseTexture::getWidth() { return tWidth; }
 int BaseTexture::getHeight() { return tHeight; }
 void BaseTexture::free()
