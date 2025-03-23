@@ -19,11 +19,11 @@ const int BaseTexture::LAND_HEIGHT = 140;
 const int BaseTexture::BIRD_WIDTH = 50;
 const int BaseTexture::BIRD_HEIGHT = 35;
 
-BaseTexture::BaseTexture()
+BaseTexture::BaseTexture() :
+	Texture(NULL),
+	tWidth(0),
+	tHeight(0)
 {
-	Texture = NULL;
-	tWidth = 0;
-	tHeight = 0;
 }
 
 int BaseTexture::getWidth()

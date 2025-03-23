@@ -9,7 +9,7 @@
 #include "../headers/Base.h"
 
 
-game::game() : scaleNumberS(0.75), bestScore(0)
+game::game() : scaleNumber(0.75), bestScore(0)
 {
     initGraphic();
     pipe.init();
@@ -60,14 +60,14 @@ bool game::initGraphic()
     }
     else
     {
-		printf("SDL initialized!\n");
+        printf("SDL initialized!\n");
         if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
         {
             printf("Warning: Linear texture filtering not enabled!");
         }
         else
         {
-			printf("Linear texture filtering enabled!\n");
+            printf("Linear texture filtering enabled!\n");
         }
         BaseTexture::gWindow = SDL_CreateWindow("Flappy Bird", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, BaseTexture::SCREEN_WIDTH, BaseTexture::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
         if (BaseTexture::gWindow == NULL)
@@ -77,7 +77,7 @@ bool game::initGraphic()
         }
         else
         {
-			printf("Window created!\n");
+            printf("Window created!\n");
             BaseTexture::gRenderer = SDL_CreateRenderer(BaseTexture::gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
             if (BaseTexture::gRenderer == NULL)
             {
@@ -86,7 +86,7 @@ bool game::initGraphic()
             }
             else
             {
-				printf("Renderer created!\n");
+                printf("Renderer created!\n");
                 SDL_SetRenderDrawColor(BaseTexture::gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
                 int imgFlags = IMG_INIT_PNG;
                 if (!(IMG_Init(imgFlags) & imgFlags))
@@ -96,7 +96,7 @@ bool game::initGraphic()
                 }
                 else
                 {
-					printf("SDL_image initialized!\n");
+                    printf("SDL_image initialized!\n");
                 }
                 if (TTF_Init() == -1)
                 {
@@ -105,7 +105,7 @@ bool game::initGraphic()
                 }
                 else
                 {
-					printf("SDL_ttf initialized!\n");
+                    printf("SDL_ttf initialized!\n");
                 }
             }
         }
@@ -142,30 +142,49 @@ void game::renderScoreSmall()
     signed char len = s.length();
     BaseTexture image;
 
-    // Calculate the width of all digits to center properly
-    int totalWidth = 0;
-    int* digitWidths = new int[len];
-
-    for (signed char i = 0; i < len; i++) {
-        signed char number = s[i] - '0';
-        std::string path = "resources/sprites/number/small/";
-        path += std::to_string(number) + ".png";
-        image.Load(path, scaleNumberS);
-        digitWidths[i] = image.getWidth();
-        totalWidth += image.getWidth() * scaleNumberS;
-        if (i < len - 1) totalWidth += 5; // spacing between digits
-        image.free();
-    }
     for (signed char i = len - 1; i >= 0; i--)
     {
-        signed char number = s[i] - '0';
+        char digit = s[i];
         std::string path = "resources/sprites/number/small/";
-        path += std::to_string(number) + ".png";
-        image.Load(path, scaleNumberS);
-        //image.Render((BaseTexture::SCREEN_WIDTH - (image.getWidth() * len + (len - 1) * 10)) / 2 + (i + 30) * i, 100);
+        path += digit;
+        path += ".png";
+
+        image.Load(path, scaleNumber);
         image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1), 268);
-        image.free();
     }
+    image.free();
+}
+
+void game::renderBestScore()
+{
+    using namespace std;
+    ifstream fileIn("resources/saved/bestScore.txt");
+    fileIn >> bestScore;
+    ofstream fileOut("resources/saved/bestScore.txt", ios::trunc);
+
+    if (BaseTexture::score > bestScore)
+    {
+        bestScore = BaseTexture::score;
+    }
+    std::string s = std::to_string(bestScore);
+    signed char len = s.length();
+    BaseTexture image;
+
+    for (signed char i = len - 1; i >= 0; i--)
+    {
+        char digit = s[i];
+        std::string path = "resources/sprites/number/small/";
+        path += digit;
+        path += ".png";
+
+        image.Load(path, scaleNumber);
+        image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1), 315);
+    }
+    image.free();
+
+    fileOut << bestScore;
+    fileIn.close();
+    fileOut.close();
 }
 
 void game::renderScoreLarge()
@@ -182,51 +201,6 @@ void game::renderScoreLarge()
         //image.Render((BaseTexture::SCREEN_WIDTH - (image.getWidth() * len + (len - 1) * 10)) / 2 + (i * (image.getWidth() + 10)), 100);
         image.Render((BaseTexture::SCREEN_WIDTH - (image.getWidth() * len + (len - 1) * 10)) / 2 + (i + 30) * i, 100);
         image.free();
-    }
-}
-
-void game::renderBestScore()
-{
-    loadBestScore();
-    std::ofstream fileOut("resources/data/bestscore.txt", std::ios::trunc);
-    if (BaseTexture::score > bestScore)
-    {
-        bestScore = BaseTexture::score;
-    }
-    std::string s = std::to_string(bestScore);
-    signed char len = s.length();
-    BaseTexture image;
-
-    // Calculate the width of all digits to center properly
-    int totalWidth = 0;
-    int* digitWidths = new int[len];
-
-    for (signed char i = 0; i < len; i++) {
-        signed char number = s[i] - '0';
-        std::string path = "resources/sprites/number/small/";
-        path += std::to_string(number) + ".png";
-        image.Load(path, scaleNumberS);
-        digitWidths[i] = image.getWidth();
-        totalWidth += image.getWidth() * scaleNumberS;
-        if (i < len - 1) totalWidth += 5; // spacing between digits
-        image.free();
-    }
-
-    for (signed char i = len - 1; i >= 0; i--)
-    {
-        signed char number = s[i] - '0';
-        std::string path = "resources/sprites/number/small/";
-        path += std::to_string(number) + ".png";
-        image.Load(path, scaleNumberS);
-        //image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1), 315);
-        //image.Render((BaseTexture::SCREEN_WIDTH - totalWidth) / 2, 315);
-        image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1), 315);
-        image.free();
-    }
-    if (fileOut.is_open())
-    {
-        fileOut << bestScore;
-        fileOut.close();
     }
 }
 

@@ -15,6 +15,8 @@
 const int FPS = 60;
 const int frameDelay = 1000 / FPS;
 
+extern "C"
+
 int main(int argc, char* argv[])
 {
     Uint32 frameStart;
@@ -142,7 +144,6 @@ int main(int argc, char* argv[])
                 game_instance.renderBestScore();
                 game_instance.replay();
                 game_instance.sound.renderSound();
-                game_instance.birdImage();
 
                 if (game_instance.userInput.Type == game::input::PLAY)
                 {
