@@ -1,4 +1,5 @@
 #include "../headers/game.h"
+#include "../headers/sound.h"
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
@@ -14,6 +15,10 @@ game::game() : scaleNumberS(0.75), bestScore(0)
     }
     pipe.init();
     land.init();
+    if (!sound.init())
+    {
+        printf("Warning: Sound init failed!\n");
+    }
     userInput.Type = input::NONE;
     loadBestScore();
 }
@@ -23,10 +28,11 @@ game::~game()
     bird.Free();
     pipe.Free();
     land.Free();
+    sound.Free();
     releaseGraphic();
 }
 void game::takeInput()
-{
+{ /* Same as commit 7 */
     userInput.Type = input::NONE;
     while (SDL_PollEvent(&BaseTexture::event) != 0)
     {
@@ -46,7 +52,7 @@ void game::takeInput()
     }
 }
 bool game::initGraphic()
-{
+{ /* Same as commit 7 */
     bool success = true;
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
     {
@@ -91,7 +97,7 @@ bool game::initGraphic()
     return success;
 }
 void game::releaseGraphic()
-{
+{ /* Same as commit 7 */
     if (BaseTexture::gRenderer)
         SDL_DestroyRenderer(BaseTexture::gRenderer);
     BaseTexture::gRenderer = NULL;
@@ -112,11 +118,12 @@ bool game::isDie() { return BaseTexture::die; }
 int game::getPipeWidth() { return pipe.width(); }
 int game::getPipeHeight() { return pipe.height(); }
 void game::Restart()
-{
+{ /* Same as commit 7 */
     BaseTexture::die = false;
     BaseTexture::score = 0;
     bird.resetTime();
 }
+// Score/UI functions same as commit 7
 void game::renderScoreDigit(signed char digit, int& currentX, int yPos, bool large, double scale)
 {
     BaseTexture image;

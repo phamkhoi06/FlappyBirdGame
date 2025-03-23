@@ -2,6 +2,7 @@
 #include "bird.h"
 #include "pipe.h"
 #include "land.h"
+#include "sound.h"
 #include "base.h"
 #include <string>
 #include <fstream>
@@ -24,7 +25,8 @@ public:
     input userInput;
     Bird bird;
     pipe pipe;
-    land land; // sound sound;
+    sound sound;
+    land land;
 public:
     game();
     ~game();
