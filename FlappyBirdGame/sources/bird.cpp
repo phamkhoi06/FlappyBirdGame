@@ -55,7 +55,7 @@ void Bird::fall()
         }
         if (time >= 0)
         {
-            posBird.y = x0 + time * time * 0.18 - 7.3 * time;
+            posBird.y = static_cast<int>(x0 + time * time * 0.18 - 7.3 * time);
             time++;
         }
     }
@@ -77,7 +77,7 @@ void Bird::update(int pipeWidth, int pipeHeight)
         }
         if (time >= 0)
         {
-            posBird.y = x0 + time * time * 0.18 - 7.3 * time;
+            posBird.y = static_cast<int>(x0 + time * time * 0.18 - 7.3 * time);
             time++;
         }
         if (!posPipe.empty() && (posBird.x + getWidth() > posPipe[ahead].x + 5) && (posBird.x + 5 < posPipe[ahead].x + pipeWidth) && (posBird.y + 5 < posPipe[ahead].y + pipeHeight || posBird.y + getHeight() > posPipe[ahead].y + pipeHeight + PIPE_SPACE + 5))

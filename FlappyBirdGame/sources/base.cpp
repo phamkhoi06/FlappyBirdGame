@@ -1,8 +1,9 @@
-#include "../headers/base.h"
 #include <iostream>
 #include <string>
 
-// Static definitions
+#include "../headers/base.h"
+
+
 bool BaseTexture::quit = false;
 bool BaseTexture::die = true;
 int BaseTexture::score = 0;
@@ -18,9 +19,23 @@ const int BaseTexture::LAND_HEIGHT = 140;
 const int BaseTexture::BIRD_WIDTH = 50;
 const int BaseTexture::BIRD_HEIGHT = 35;
 
-BaseTexture::BaseTexture() { Texture = NULL; }
-int BaseTexture::getWidth() { return tWidth; }
-int BaseTexture::getHeight() { return tHeight; }
+BaseTexture::BaseTexture()
+{
+	Texture = NULL;
+	tWidth = 0;
+	tHeight = 0;
+}
+
+int BaseTexture::getWidth()
+{
+    return tWidth;
+}
+
+int BaseTexture::getHeight()
+{
+    return tHeight;
+}
+
 void BaseTexture::free()
 {
     if (Texture != NULL)
@@ -59,8 +74,8 @@ bool BaseTexture::Load(std::string path, double scale)
         }
         else
         {
-            tWidth = (loadedSurface->w) * scale;
-            tHeight = (loadedSurface->h) * scale;
+            tWidth = static_cast<int> ((loadedSurface->w) * scale);
+            tHeight = static_cast<int> ((loadedSurface->h) * scale);
         }
         SDL_FreeSurface(loadedSurface);
     }

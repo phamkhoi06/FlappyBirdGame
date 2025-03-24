@@ -1,19 +1,28 @@
-/* file: headers/game.h */
 #pragma once
+
+#include <string>
+#include <fstream>
+#include <sstream>
+
 #include "bird.h"
 #include "pipe.h"
 #include "base.h"
 #include "land.h"
 #include "sound.h"
-#include <string>
-#include <fstream>
-#include <sstream>
-// No 'using namespace std;'
 
-class game {
+
+class game
+{
 public:
-    struct input {
-        enum type { QUIT, PLAY, NONE, PAUSE };
+    struct input
+    {
+        enum type
+        {
+            QUIT,
+            PLAY,
+            NONE,
+            PAUSE
+        };
         type Type;
     };
     input userInput;
@@ -21,6 +30,7 @@ public:
     pipe pipe;
     sound sound;
     land land;
+
 public:
     game();
     ~game();
@@ -50,8 +60,8 @@ public:
     void renderMedal();
     void replay();
     bool checkReplay();
-    // Update Restart to take theme state
     void Restart(bool isDark);
+
 private:
     void loadBestScore();
     void saveBestScore();

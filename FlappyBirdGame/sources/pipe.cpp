@@ -1,28 +1,40 @@
-#include "stdio.h"
 #include <iostream>
-#include <stdlib.h>
+#include <cstdlib>
 #include <vector>
-#include <time.h>
+#include <ctime>
 
-#include "../headers/pipe.h"
 #include "../headers/base.h"
+#include "../headers/pipe.h"
 
 
 std::vector<position> posPipe;
 
 bool pipe::init()
 {
-    posPipe.clear();
-    for (signed char i = 0; i < TOTAL_PIPE; i++)
-    {
-        position temp;
-        temp.getPos(SCREEN_WIDTH + i * PIPE_DISTANCE + 350, (rand() % (randMax - randMin + 1)) + randMin);
-        posPipe.push_back(temp);
-    }
     if (isNULL())
     {
         if (!Load("resources/image/pipe.png", 1))
+        {
+            printf("Failed to load pipe texture in init!\n");
             return false;
+        }
+    }
+
+    posPipe.clear();
+    const int playableHeight = BaseTexture::SCREEN_HEIGHT - BaseTexture::LAND_HEIGHT;
+    const int pipeTextureHeight = getHeight();
+
+    const int randMin_actual = (int)(0.20 * playableHeight) - pipeTextureHeight;
+    const int randMax_actual = (int)(0.80 * playableHeight) - pipeTextureHeight - BaseTexture::PIPE_SPACE;
+
+    for (signed char i = 0; i < BaseTexture::TOTAL_PIPE; i++)
+    {
+        position temp;
+        int yPos = (randMax_actual > randMin_actual)
+            ? (rand() % (randMax_actual - randMin_actual + 1)) + randMin_actual
+            : (BaseTexture::SCREEN_HEIGHT / 2 - BaseTexture::PIPE_SPACE / 2 - pipeTextureHeight);
+        temp.getPos(BaseTexture::SCREEN_WIDTH + i * BaseTexture::PIPE_DISTANCE + 350, yPos);
+        posPipe.push_back(temp);
     }
     return !isNULL();
 }
@@ -31,27 +43,33 @@ void pipe::render()
 {
     if (isNULL())
         return;
-    for (signed char i = 0; i < TOTAL_PIPE; i++)
+    for (signed char i = 0; i < BaseTexture::TOTAL_PIPE; i++)
     {
-        if (posPipe[i].x <= SCREEN_WIDTH && posPipe[i].x > -getWidth())
+        if (posPipe[i].x <= BaseTexture::SCREEN_WIDTH && posPipe[i].x > -getWidth())
             Render(posPipe[i].x, posPipe[i].y);
-        Render(posPipe[i].x, posPipe[i].y + getHeight() + PIPE_SPACE, 180);
+        Render(posPipe[i].x, posPipe[i].y + getHeight() + BaseTexture::PIPE_SPACE, 180);
     }
 }
 void pipe::update()
 {
     if (isNULL())
         return;
-    if (!die)
+    if (!BaseTexture::die)
     {
-        const int randMin_actual = -getHeight() + 30;
-        const int randMax_actual = SCREEN_HEIGHT - LAND_HEIGHT - getHeight() - PIPE_SPACE - 30;
-        for (signed char i = 0; i < TOTAL_PIPE; i++)
+        const int playableHeight = BaseTexture::SCREEN_HEIGHT - BaseTexture::LAND_HEIGHT;
+        const int pipeTextureHeight = getHeight();
+        const int randMin_actual = (int)(0.20 * playableHeight) - pipeTextureHeight;
+        const int randMax_actual = (int)(0.80 * playableHeight) - pipeTextureHeight - BaseTexture::PIPE_SPACE;
+
+        for (signed char i = 0; i < BaseTexture::TOTAL_PIPE; i++)
         {
             if (posPipe[i].x < -getWidth())
             {
-                posPipe[i].y = (rand() % (randMax_actual - randMin_actual + 1)) + randMin_actual;
-                posPipe[i].x = posPipe[(i + TOTAL_PIPE - 1) % TOTAL_PIPE].x + PIPE_DISTANCE;
+                int yPos = (randMax_actual > randMin_actual)
+                    ? (rand() % (randMax_actual - randMin_actual + 1)) + randMin_actual
+                    : (BaseTexture::SCREEN_HEIGHT / 2 - BaseTexture::PIPE_SPACE / 2 - pipeTextureHeight);
+                posPipe[i].y = yPos;
+                posPipe[i].x = posPipe[(i + BaseTexture::TOTAL_PIPE - 1) % BaseTexture::TOTAL_PIPE].x + BaseTexture::PIPE_DISTANCE;
             }
             else
             {
