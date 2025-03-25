@@ -30,12 +30,6 @@ Copy-Item -Path (Join-Path $targetDir "*.dll") -Destination $binDir -Force
 # Copy all files from the res directory of the project into the build's res directory
 Copy-Item -Path (Join-Path $projectDir "res\*") -Destination $resDir -Force
 
-# Define directories using Visual Studio macros
-$buildDir      = "$(SolutionDir)build"
-$targetDir     = "$(TargetDir)"
-$targetFile    = "$(TargetFileName)"
-$projectDir    = "$(ProjectDir)"
-
 # Ensure the build directory exists
 if (-Not (Test-Path $buildDir)) {
     New-Item -ItemType Directory -Path $buildDir | Out-Null

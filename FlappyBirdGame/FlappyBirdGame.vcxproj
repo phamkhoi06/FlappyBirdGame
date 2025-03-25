@@ -243,9 +243,6 @@ XCOPY /Y /E /D "$(ProjectDir)resources\*" "%BuildDir%\resources\"</Command>
     <ClCompile Include="sources\Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FlappyBirdGame.aps" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="headers\Base.h" />
     <ClInclude Include="headers\Bird.h" />
     <ClInclude Include="headers\Game.h" />
@@ -259,9 +256,6 @@ XCOPY /Y /E /D "$(ProjectDir)resources\*" "%BuildDir%\resources\"</Command>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\favicon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

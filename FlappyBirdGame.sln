@@ -43,7 +43,6 @@ Global
 		{AC79FB51-3DA7-4A58-9C5C-C9645815606D}.Release - Static Linking|x86.Build.0 = Release - Static Linking|Win32
 		{A81B21A3-5927-4475-949D-38FFB8867EB3}.Debug|x64.ActiveCfg = Debug|x64
 		{A81B21A3-5927-4475-949D-38FFB8867EB3}.Debug|x86.ActiveCfg = Debug|Win32
-		{A81B21A3-5927-4475-949D-38FFB8867EB3}.Debug|x86.Build.0 = Debug|Win32
 		{A81B21A3-5927-4475-949D-38FFB8867EB3}.Release - Dynamic Linking|x64.ActiveCfg = Release - Dynamic Linking|x64
 		{A81B21A3-5927-4475-949D-38FFB8867EB3}.Release - Dynamic Linking|x64.Build.0 = Release - Dynamic Linking|x64
 		{A81B21A3-5927-4475-949D-38FFB8867EB3}.Release - Dynamic Linking|x86.ActiveCfg = Release - Dynamic Linking|Win32
