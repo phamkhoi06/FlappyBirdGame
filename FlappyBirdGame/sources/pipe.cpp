@@ -13,7 +13,7 @@ bool pipe::init()
 {
     if (isNULL())
     {
-        if (!Load("resources/image/pipe.png", 1))
+        if (!Load("resources/sprites/pipe.png", 1))
         {
             printf("Failed to load pipe texture in init!\n");
             return false;

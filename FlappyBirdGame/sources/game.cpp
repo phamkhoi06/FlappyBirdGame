@@ -60,9 +60,14 @@ bool game::initGraphic()
     }
     else
     {
+		printf("SDL initialized!\n");
         if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
         {
             printf("Warning: Linear texture filtering not enabled!");
+        }
+        else
+        {
+			printf("Linear texture filtering enabled!\n");
         }
         BaseTexture::gWindow = SDL_CreateWindow("Flappy Bird", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, BaseTexture::SCREEN_WIDTH, BaseTexture::SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
         if (BaseTexture::gWindow == NULL)
@@ -72,6 +77,7 @@ bool game::initGraphic()
         }
         else
         {
+			printf("Window created!\n");
             BaseTexture::gRenderer = SDL_CreateRenderer(BaseTexture::gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
             if (BaseTexture::gRenderer == NULL)
             {
@@ -80,6 +86,7 @@ bool game::initGraphic()
             }
             else
             {
+				printf("Renderer created!\n");
                 SDL_SetRenderDrawColor(BaseTexture::gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
                 int imgFlags = IMG_INIT_PNG;
                 if (!(IMG_Init(imgFlags) & imgFlags))
@@ -87,10 +94,18 @@ bool game::initGraphic()
                     printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
                     success = false;
                 }
+                else
+                {
+					printf("SDL_image initialized!\n");
+                }
                 if (TTF_Init() == -1)
                 {
                     printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
                     success = false;
+                }
+                else
+                {
+					printf("SDL_ttf initialized!\n");
                 }
             }
         }
@@ -126,13 +141,29 @@ void game::renderScoreSmall()
     std::string s = std::to_string(BaseTexture::score);
     signed char len = s.length();
     BaseTexture image;
+
+    // Calculate the width of all digits to center properly
+    int totalWidth = 0;
+    int* digitWidths = new int[len];
+
+    for (signed char i = 0; i < len; i++) {
+        signed char number = s[i] - '0';
+        std::string path = "resources/sprites/number/small/";
+        path += std::to_string(number) + ".png";
+        image.Load(path, scaleNumberS);
+        digitWidths[i] = image.getWidth();
+        totalWidth += image.getWidth() * scaleNumberS;
+        if (i < len - 1) totalWidth += 5; // spacing between digits
+        image.free();
+    }
     for (signed char i = len - 1; i >= 0; i--)
     {
         signed char number = s[i] - '0';
-        std::string path = "resources/number/small/";
+        std::string path = "resources/sprites/number/small/";
         path += std::to_string(number) + ".png";
         image.Load(path, scaleNumberS);
-        image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1), 268);
+        //image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1), 268);
+        image.Render((BaseTexture::SCREEN_WIDTH - totalWidth) / 2, 268);
         image.free();
     }
 }
@@ -145,7 +176,7 @@ void game::renderScoreLarge()
     for (signed char i = 0; i < len; i++)
     {
         signed char number = s[i] - '0';
-        std::string path = "resources/number/large/";
+        std::string path = "resources/sprites/number/large/";
         path += std::to_string(number) + ".png";
         image.Load(path, 1);
         image.Render((BaseTexture::SCREEN_WIDTH - (image.getWidth() * len + (len - 1) * 10)) / 2 + (i * (image.getWidth() + 10)), 100);
@@ -164,13 +195,30 @@ void game::renderBestScore()
     std::string s = std::to_string(bestScore);
     signed char len = s.length();
     BaseTexture image;
+
+    // Calculate the width of all digits to center properly
+    int totalWidth = 0;
+    int* digitWidths = new int[len];
+
+    for (signed char i = 0; i < len; i++) {
+        signed char number = s[i] - '0';
+        std::string path = "resources/sprites/number/small/";
+        path += std::to_string(number) + ".png";
+        image.Load(path, scaleNumberS);
+        digitWidths[i] = image.getWidth();
+        totalWidth += image.getWidth() * scaleNumberS;
+        if (i < len - 1) totalWidth += 5; // spacing between digits
+        image.free();
+    }
+
     for (signed char i = len - 1; i >= 0; i--)
     {
         signed char number = s[i] - '0';
-        std::string path = "resources/number/small/";
+        std::string path = "resources/sprites/number/small/";
         path += std::to_string(number) + ".png";
         image.Load(path, scaleNumberS);
-        image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1), 315);
+        //image.Render(260 - image.getWidth() * (len - i - 1) * 0.75 - 5 * (len - i - 1), 315);
+        image.Render((BaseTexture::SCREEN_WIDTH - totalWidth) / 2, 315);
         image.free();
     }
     if (fileOut.is_open())
@@ -182,7 +230,7 @@ void game::renderBestScore()
 
 void game::loadBestScore()
 {
-    std::ifstream fileIn("resources/data/bestScore.txt");
+    std::ifstream fileIn("resources/saved/bestscore.txt");
     if (fileIn.is_open())
     {
         fileIn >> bestScore;
@@ -196,7 +244,7 @@ void game::loadBestScore()
 
 void game::saveBestScore()
 {
-    std::ofstream fileOut("resources/data/bestScore.txt", std::ios::trunc);
+    std::ofstream fileOut("resources/saved/bestscore.txt", std::ios::trunc);
     if (fileOut.is_open())
     {
         fileOut << bestScore;
@@ -207,21 +255,21 @@ void game::saveBestScore()
 void game::renderMessage()
 {
     BaseTexture image;
-    image.Load("resources/image/message.png", 1);
-    image.Render((BaseTexture::SCREEN_WIDTH - image.getWidth()) / 2, 180);
+    image.Load("resources/sprites/message.png", 1);
+    image.Render((BaseTexture::SCREEN_WIDTH - image.getWidth()) / 2, 100);
     image.free();
 }
 void game::renderBackground()
 {
     BaseTexture image;
-    image.Load("resources/image/background.png", 1);
+    image.Load("resources/sprites/background.png", 1);
     image.Render(0, 0);
     image.free();
 }
 void game::renderBackgroundNight()
 {
     BaseTexture image;
-    image.Load("resources/image/background-night.png", 1);
+    image.Load("resources/sprites/background-night.png", 1);
     image.Render(0, 0);
     image.free();
 }
@@ -229,44 +277,44 @@ void game::renderLand() {}
 void game::resume()
 {
     BaseTexture image;
-    image.Load("resources/image/resume.png", 1);
+    image.Load("resources/sprites/resume.png", 1);
     image.Render(BaseTexture::SCREEN_WIDTH - 50, 20);
     image.free();
 }
 void game::pause()
 {
     BaseTexture image;
-    image.Load("resources/image/pause.png", 1);
+    image.Load("resources/sprites/pause.png", 1);
     image.Render(BaseTexture::SCREEN_WIDTH - 50, 20);
     image.free();
 }
 void game::renderPauseTab()
 {
     BaseTexture image;
-    image.Load("resources/image/pauseTab.png", 1);
+    image.Load("resources/sprites/pauseTab.png", 1);
     image.Render((BaseTexture::SCREEN_WIDTH - image.getWidth()) / 2, 230);
     image.free();
 }
 void game::lightTheme()
 {
     BaseTexture image;
-    image.Load("resources/image/bird.png", 0.8);
+    image.Load("resources/sprites/bird.png", 0.8);
     image.Render(105, 315);
     image.free();
 }
 void game::darkTheme()
 {
     BaseTexture image;
-    image.Load("resources/image/bird-dark.png", 0.8);
+    image.Load("resources/sprites/bird-dark.png", 0.8);
     image.Render(105, 315);
     image.free();
 }
 void game::nextButton()
 {
     BaseTexture image;
-    image.Load("resources/image/nextRight.png", 1);
+    image.Load("resources/sprites/nextRight.png", 1);
     image.Render(149, 322);
-    image.Load("resources/image/nextLeft.png", 1);
+    image.Load("resources/sprites/nextLeft.png", 1);
     image.Render(88, 322);
     image.free();
 }
@@ -281,28 +329,14 @@ bool game::changeTheme()
 void game::renderGameOver()
 {
     BaseTexture image;
-    image.Load("resources/image/gameOver.png", 1);
+    image.Load("resources/sprites/gameOver.png", 1);
     image.Render((BaseTexture::SCREEN_WIDTH - image.getWidth()) / 2, 150);
-    image.free();
-}
-void game::renderMedal()
-{
-    BaseTexture image;
-    std::string medalPath = "resources/medal/";
-    if (BaseTexture::score > 50)
-        medalPath += "gold.png";
-    else if (BaseTexture::score > 20)
-        medalPath += "silver.png";
-    else
-        medalPath += "honor.png";
-    image.Load(medalPath, scaleNumberS);
-    image.Render(82, 275);
     image.free();
 }
 void game::replay()
 {
     BaseTexture image;
-    image.Load("resources/image/replay.png", 1);
+    image.Load("resources/sprites/replay.png", 1);
     image.Render((BaseTexture::SCREEN_WIDTH - image.getWidth()) / 2, 380);
     image.free();
 }
@@ -311,7 +345,7 @@ bool game::checkReplay()
     int x, y;
     SDL_GetMouseState(&x, &y);
     BaseTexture image;
-    image.Load("resources/image/replay.png", 1);
+    image.Load("resources/sprites/replay.png", 1);
     int w = image.getWidth();
     int h = image.getHeight();
     image.free();
