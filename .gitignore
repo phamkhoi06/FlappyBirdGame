@@ -388,3 +388,7 @@ FodyWeavers.xsd
 
 *.exe
 *.zip
+/FlappyBirdGame/Untitled-1.cpp
+/FlappyBirdGame/resources/medal
+/FlappyBirdGame/resources/sdl
+/FlappyBirdGame/resources/data
