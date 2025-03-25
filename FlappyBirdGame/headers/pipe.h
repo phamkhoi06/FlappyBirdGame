@@ -1,9 +1,13 @@
 #pragma once
+
 #include <iostream>
 #include <vector>
+
 #include "base.h"
-using namespace std;
-extern vector<position> posPipe;
+
+
+extern std::vector<position> posPipe;
+
 class pipe : public BaseTexture
 {
 private:

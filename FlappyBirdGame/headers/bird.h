@@ -1,10 +1,15 @@
 #pragma once
+
+#include <string>
+
 #include "base.h"
 #include "pipe.h"
-using namespace std;
-class Bird : public BaseTexture
-{
+
+
+class Bird : public BaseTexture {
 public:
+    Bird() : angle(0), time(0), x0(0), ahead(0), saved_path("") {}
+
     bool init(bool isDark);
     void render();
     void Free();
@@ -15,7 +20,7 @@ public:
 
 private:
     int angle, time, x0;
-    int ahead = 0;
-    string saved_path = "";
+    int ahead;
+    std::string saved_path;
     position posBird;
 };
