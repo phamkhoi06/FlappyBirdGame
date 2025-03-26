@@ -57,7 +57,6 @@ public:
     void nextButton();
     bool changeTheme();
     void renderGameOver();
-    void renderMedal();
     void replay();
     bool checkReplay();
     void Restart(bool isDark);
