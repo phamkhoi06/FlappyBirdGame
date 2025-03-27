@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -155,12 +155,77 @@ void game::renderScoreSmall()
     image.free();
 }
 
+void game::renderScoreCentered(int y_position, bool score)
+{
+    std::string s;
+    if (score)
+        s = std::to_string(BaseTexture::score);
+    else
+    {
+        s = std::to_string(bestScore);
+        std::ifstream fileIn("resources/saved/bestscore.txt");
+        fileIn >> bestScore;
+        std::ofstream fileOut("resources/saved/bestscore.txt", std::ios::trunc);
+        if (BaseTexture::score > bestScore)
+        {
+            bestScore = BaseTexture::score;
+        }
+        fileOut << bestScore;
+        fileIn.close();
+        fileOut.close();
+    }
+
+    if (BaseTexture::score > bestScore)
+    {
+        bestScore = BaseTexture::score;
+    }
+    signed char len = s.length();
+    BaseTexture image;
+
+    int total_width = 0;
+    std::vector<int> digit_widths(len);
+
+    for (signed char i = 0; i < len; i++)
+    {
+        char digit = s[i];
+        std::string path = "resources/sprites/number/small/";
+        path += digit;
+        path += ".png";
+        image.Load(path, scaleNumber);
+
+        digit_widths[i] = image.getWidth();
+        total_width += image.getWidth();
+        if (i < len - 1) {
+            total_width += 5;
+        }
+
+        image.free();
+    }
+
+    int start_x = (BaseTexture::SCREEN_WIDTH - total_width) / 2;
+    int current_x = start_x;
+    for (signed char i = 0; i < len; i++)
+    {
+        char digit = s[i];
+        std::string path = "resources/sprites/number/small/";
+        path += digit;
+        path += ".png";
+        image.Load(path, scaleNumber);
+        image.Render(current_x, y_position);
+        current_x += image.getWidth() + (i < len - 1 ? 5 : 0);
+
+        image.free();
+    }
+
+}
+
+
 void game::renderBestScore()
 {
     using namespace std;
-    ifstream fileIn("resources/saved/bestScore.txt");
+    ifstream fileIn("resources/saved/bestscore.txt");
     fileIn >> bestScore;
-    ofstream fileOut("resources/saved/bestScore.txt", ios::trunc);
+    ofstream fileOut("resources/saved/bestscore.txt", ios::trunc);
 
     if (BaseTexture::score > bestScore)
     {
@@ -198,7 +263,6 @@ void game::renderScoreLarge()
         std::string path = "resources/sprites/number/large/";
         path += std::to_string(number) + ".png";
         image.Load(path, 1);
-        //image.Render((BaseTexture::SCREEN_WIDTH - (image.getWidth() * len + (len - 1) * 10)) / 2 + (i * (image.getWidth() + 10)), 100);
         image.Render((BaseTexture::SCREEN_WIDTH - (image.getWidth() * len + (len - 1) * 10)) / 2 + (i + 30) * i, 100);
         image.free();
     }

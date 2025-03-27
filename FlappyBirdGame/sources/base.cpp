@@ -16,8 +16,8 @@ const int BaseTexture::PIPE_SPACE = 160;
 const int BaseTexture::TOTAL_PIPE = 4;
 const int BaseTexture::PIPE_DISTANCE = 220;
 const int BaseTexture::LAND_HEIGHT = 140;
-const int BaseTexture::BIRD_WIDTH = 50;
-const int BaseTexture::BIRD_HEIGHT = 35;
+const int BaseTexture::BIRD_WIDTH = 40;
+const int BaseTexture::BIRD_HEIGHT = 28;
 
 BaseTexture::BaseTexture() :
 	Texture(NULL),
@@ -46,9 +46,11 @@ void BaseTexture::free()
         tHeight = 0;
     }
 }
+
+
 void BaseTexture::Render(int x, int y, int angle, SDL_Rect* clip, SDL_RendererFlip flip)
 {
-    SDL_Rect Rec_Render = { x, y, tWidth, tHeight };
+    SDL_Rect Rec_Render = { x, y, tWidth, tHeight};
     if (clip != NULL)
     {
         Rec_Render.w = clip->w;
@@ -56,6 +58,8 @@ void BaseTexture::Render(int x, int y, int angle, SDL_Rect* clip, SDL_RendererFl
     }
     SDL_RenderCopyEx(gRenderer, Texture, clip, &Rec_Render, angle, NULL, flip);
 }
+
+
 bool BaseTexture::Load(std::string path, double scale)
 {
     free();

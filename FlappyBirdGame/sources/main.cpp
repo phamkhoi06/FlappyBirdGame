@@ -1,4 +1,4 @@
-#define SDL_MAIN_HANDLED
+﻿#define SDL_MAIN_HANDLED
 
 #include <time.h>
 #include <stdlib.h>
@@ -14,6 +14,7 @@
 
 const int FPS = 60;
 const int frameDelay = 1000 / FPS;
+
 
 extern "C"
 
@@ -67,8 +68,8 @@ int main(int argc, char* argv[])
                     game_instance.bird.render();
                     game_instance.bird.fall();
                     game_instance.renderGameOver();
-                    game_instance.renderScoreSmall();
-                    game_instance.renderBestScore();
+                    game_instance.renderScoreCentered(268, true);
+                    game_instance.renderScoreCentered(315, false);
                     game_instance.replay();
                 }
                 else
@@ -106,8 +107,9 @@ int main(int argc, char* argv[])
                 int x, y;
                 SDL_GetMouseState(&x, &y);
 
-                if (x > BaseTexture::SCREEN_WIDTH - 50 && x < BaseTexture::SCREEN_WIDTH - 20 &&
-                    y > 20 && y < 50)
+                if ((x > BaseTexture::SCREEN_WIDTH - 50 && x < BaseTexture::SCREEN_WIDTH - 20 &&
+                    y > 20 && y < 50
+                    ) || game_instance.checkReplay())
                 {
                     isPause = false;
                     game_instance.userInput.Type = game::input::NONE;
@@ -144,21 +146,22 @@ int main(int argc, char* argv[])
                 game_instance.renderBestScore();
                 game_instance.replay();
                 game_instance.sound.renderSound();
+				game_instance.sound.renderSoundBGM();
 
-                if (game_instance.userInput.Type == game::input::PLAY)
+            }
+            if (game_instance.userInput.Type == game::input::PLAY)
+            {
+                if (game_instance.sound.checkSound())
                 {
-                    if (game_instance.checkReplay())
-                    {
-                        isPause = false;
-                        game_instance.Restart();
-                    }
-                    else if (game_instance.sound.checkSound())
-                    {
-                        isSound = abs(1 - isSound);
-                        game_instance.sound.setPlay(isSound);
-                    }
-                    game_instance.userInput.Type = game::input::NONE;
+                    isSound = abs(1 - isSound);
+                    game_instance.sound.setPlay(isSound);
                 }
+                if (game_instance.sound.checkSoundBGM())
+                {
+                    isSound = abs(1 - isSound);
+                    game_instance.sound.setPlayBGM(isSound);
+                }
+                game_instance.userInput.Type = game::input::NONE;
             }
             game_instance.display();
         }
