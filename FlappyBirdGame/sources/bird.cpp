@@ -86,6 +86,7 @@ void Bird::update(int pipeWidth, int pipeHeight)
         }
         else if (!posPipe.empty() && posBird.x > posPipe[ahead].x + pipeWidth)
         {
+         
             ahead = (ahead + 1) % TOTAL_PIPE;
             score++;
         }
@@ -100,7 +101,7 @@ void Bird::flap()
 {
     if (!die)
     {
-        angle = -25;
+        //angle = -25;
         resetTime();
     }
 }

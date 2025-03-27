@@ -36,13 +36,14 @@ public:
     ~game();
     bool initGraphic();
     void releaseGraphic();
-    bool isQuit() { return BaseTexture::quit; }
-    bool isDie() { return BaseTexture::die; }
-    int getPipeWidth() { return pipe.width(); }
-    int getPipeHeight() { return pipe.height(); }
+    inline bool isQuit() { return BaseTexture::quit; }
+    inline bool isDie() { return BaseTexture::die; }
+    inline int getPipeWidth() { return pipe.width(); }
+    inline int getPipeHeight() { return pipe.height(); }
     void takeInput();
     void display();
     void renderScoreSmall();
+    void renderScoreCentered(int y_position, bool score);
     void renderScoreLarge();
     void renderBestScore();
     void renderMessage();
