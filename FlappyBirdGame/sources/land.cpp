@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string>
 
-#include "../headers/land.h"
-#include "../headers/base.h"
+#include "../headers/Land.h"
+#include "../headers/Base.h"
 
 
 bool land::init()

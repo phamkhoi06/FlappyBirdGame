@@ -2,13 +2,13 @@
 #include <iostream>
 #include <string>
 
-#include "../headers/bird.h"
-#include "../headers/pipe.h"
+#include "../headers/Bird.h"
+#include "../headers/Pipe.h"
 
 
-bool Bird::init(bool isDark)
+bool Bird::init()
 {
-    std::string bird_path = isDark ? "resources/sprites/bird-dark.png" : "resources/sprites/bird.png";
+    std::string bird_path = "resources/sprites/bird.png";
     if (saved_path == bird_path && !isNULL())
     {
         posBird.getPos(75, SCREEN_HEIGHT / 2 - BIRD_HEIGHT / 2);

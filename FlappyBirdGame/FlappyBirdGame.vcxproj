@@ -107,6 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,13 +131,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="sources\base.cpp" />
-    <ClCompile Include="sources\bird.cpp" />
-    <ClCompile Include="sources\game.cpp" />
-    <ClCompile Include="sources\land.cpp" />
-    <ClCompile Include="sources\main.cpp" />
-    <ClCompile Include="sources\pipe.cpp" />
-    <ClCompile Include="sources\sound.cpp" />
+    <ClCompile Include="a.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="sources\Base.cpp" />
+    <ClCompile Include="sources\Bird.cpp" />
+    <ClCompile Include="sources\Game.cpp" />
+    <ClCompile Include="sources\Land.cpp" />
+    <ClCompile Include="sources\Main.cpp" />
+    <ClCompile Include="sources\Pipe.cpp" />
+    <ClCompile Include="sources\Sound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitattributes" />
@@ -144,14 +148,15 @@
     <None Include="..\README.md" />
     <None Include="..\vcpkg-configuration.json" />
     <None Include="..\vcpkg.json" />
+    <None Include="FlappyBirdGame.aps" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="headers\base.h" />
-    <ClInclude Include="headers\bird.h" />
-    <ClInclude Include="headers\game.h" />
-    <ClInclude Include="headers\land.h" />
-    <ClInclude Include="headers\pipe.h" />
-    <ClInclude Include="headers\sound.h" />
+    <ClInclude Include="headers\Base.h" />
+    <ClInclude Include="headers\Bird.h" />
+    <ClInclude Include="headers\Game.h" />
+    <ClInclude Include="headers\Land.h" />
+    <ClInclude Include="headers\Pipe.h" />
+    <ClInclude Include="headers\Sound.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

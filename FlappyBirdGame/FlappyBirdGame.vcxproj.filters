@@ -15,25 +15,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="sources\base.cpp">
+    <ClCompile Include="sources\Base.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sources\main.cpp">
+    <ClCompile Include="sources\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sources\bird.cpp">
+    <ClCompile Include="sources\Bird.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sources\game.cpp">
+    <ClCompile Include="sources\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sources\pipe.cpp">
+    <ClCompile Include="sources\Pipe.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sources\land.cpp">
+    <ClCompile Include="sources\Land.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sources\sound.cpp">
+    <ClCompile Include="sources\Sound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="a.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -43,24 +46,27 @@
     <None Include="..\vcpkg.json" />
     <None Include="..\vcpkg-configuration.json" />
     <None Include="..\.gitattributes" />
+    <None Include="FlappyBirdGame.aps">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="headers\base.h">
+    <ClInclude Include="headers\Base.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\bird.h">
+    <ClInclude Include="headers\Bird.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\game.h">
+    <ClInclude Include="headers\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\pipe.h">
+    <ClInclude Include="headers\Pipe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\land.h">
+    <ClInclude Include="headers\Land.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\sound.h">
+    <ClInclude Include="headers\Sound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
