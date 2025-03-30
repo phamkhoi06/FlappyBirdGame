@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#include "base.h"
+#include "Pipe.h"
 
 
 extern std::vector<position> posPipe;

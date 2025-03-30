@@ -2,15 +2,15 @@
 
 #include <string>
 
-#include "base.h"
-#include "pipe.h"
+#include "Base.h"
+#include "Pipe.h"
 
 
 class Bird : public BaseTexture {
 public:
     Bird() : angle(0), time(0), x0(0), ahead(0), saved_path("") {}
 
-    bool init(bool isDark);
+    bool init();
     void render();
     void Free();
     void resetTime();

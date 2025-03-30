@@ -8,8 +8,8 @@
 #include <iostream>
 #include <Windows.h>
 
-#include "../headers/game.h"
-#include "../headers/base.h"
+#include "../headers/Game.h"
+#include "../headers/Base.h"
 
 
 const int FPS = 60;
@@ -23,7 +23,6 @@ int main(int argc, char* argv[])
     bool isMenu = false;
     bool isPause = false;
     bool isSound = true;
-    bool isDark = false;
 
     while (!game_instance.isQuit())
     {
@@ -52,15 +51,12 @@ int main(int argc, char* argv[])
                 }
                 else if (isMenu == false && game_instance.userInput.Type == game::input::PLAY)
                 {
-                    game_instance.Restart(isDark);
+                    game_instance.Restart();
                     isMenu = true;
                     break;
                 }
 
-                if (!isDark)
-                    game_instance.renderBackground();
-                else
-                    game_instance.renderBackgroundNight();
+                game_instance.renderBackground();
                 game_instance.pipe.render();
                 game_instance.land.render();
 
@@ -75,7 +71,7 @@ int main(int argc, char* argv[])
                 }
                 else
                 {
-                    game_instance.bird.init(isDark);
+                    game_instance.bird.init();
                     game_instance.bird.render();
                     game_instance.renderMessage();
                     game_instance.land.update();
@@ -89,7 +85,7 @@ int main(int argc, char* argv[])
 
             if (!isMenu)
             {
-                game_instance.Restart(isDark);
+                game_instance.Restart();
             }
         }
         else
@@ -139,10 +135,7 @@ int main(int argc, char* argv[])
                 game_instance.userInput.Type = game::input::NONE;
             }
 
-            if (!isDark)
-                game_instance.renderBackground();
-            else
-                game_instance.renderBackgroundNight();
+            game_instance.renderBackground();
             game_instance.pipe.render();
             game_instance.land.render();
             game_instance.bird.render();
@@ -163,10 +156,7 @@ int main(int argc, char* argv[])
                 game_instance.renderBestScore();
                 game_instance.replay();
                 game_instance.sound.renderSound();
-                if (!isDark)
-                    game_instance.lightTheme();
-                else
-                    game_instance.darkTheme();
+                game_instance.birdImage();
                 game_instance.nextButton();
 
                 if (game_instance.userInput.Type == game::input::PLAY)
@@ -174,17 +164,12 @@ int main(int argc, char* argv[])
                     if (game_instance.checkReplay())
                     {
                         isPause = false;
-                        game_instance.Restart(isDark);
+                        game_instance.Restart();
                     }
                     else if (game_instance.sound.checkSound())
                     {
                         isSound = abs(1 - isSound);
                         game_instance.sound.setPlay(isSound);
-                    }
-                    else if (game_instance.changeTheme())
-                    {
-                        isDark = abs(1 - isDark);
-                        game_instance.bird.init(isDark);
                     }
                     game_instance.userInput.Type = game::input::NONE;
                 }

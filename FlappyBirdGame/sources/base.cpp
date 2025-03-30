@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "../headers/base.h"
+#include "../headers/Base.h"
 
 
 bool BaseTexture::quit = false;
