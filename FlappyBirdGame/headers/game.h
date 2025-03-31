@@ -47,14 +47,11 @@ public:
     void renderBestScore();
     void renderMessage();
     void renderBackground();
-    void renderBackgroundNight();
     void renderLand();
     void resume();
     void pause();
     void renderPauseTab();
     void birdImage();
-    void nextButton();
-    bool changeTheme();
     void renderGameOver();
     void replay();
     bool checkReplay();
