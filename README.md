@@ -10,12 +10,19 @@ Flap. Soar. Conquer.
 
 ## Screenshots
 
-<div style="display: flex; gap: 20px;">
+<div style="display: flex; gap: 50px;">
   <a href="Screenshots/img1.png">
     <img src="Screenshots/img1.png" alt="Screenshot 1" width="300">
   </a>
   <a href="Screenshots/img2.png">
     <img src="Screenshots/img2.png" alt="Screenshot 2" width="300">
+  </a>
+  <br>
+    <a href="Screenshots/img3.png">
+    <img src="Screenshots/img3.png" alt="Screenshot 2" width="300">
+  </a>
+      <a href="Screenshots/img4.png">
+    <img src="Screenshots/img4.png" alt="Screenshot 2" width="300">
   </a>
 </div>
 
