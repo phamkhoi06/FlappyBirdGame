@@ -93,20 +93,6 @@ int main(int argc, char* argv[])
             isMenu = true;
             game_instance.takeInput();
 
-            //if (game_instance.userInput.Type == game::input::PAUSE)
-            //{
-            //    isPause = abs(1 - isPause);
-            //    game_instance.userInput.Type = game::input::NONE;
-            //}
-
-            //if (isPause == false && game_instance.userInput.Type == game::input::PLAY)
-            //{
-            //    if (isSound)
-            //        game_instance.sound.playBreath();
-            //    game_instance.bird.resetTime();
-            //    game_instance.userInput.Type = game::input::NONE;
-            //}
-
             if (game_instance.userInput.Type == game::input::PAUSE)
             {
                 isPause = abs(1 - isPause);
@@ -157,7 +143,6 @@ int main(int argc, char* argv[])
                 game_instance.replay();
                 game_instance.sound.renderSound();
                 game_instance.birdImage();
-                game_instance.nextButton();
 
                 if (game_instance.userInput.Type == game::input::PLAY)
                 {
@@ -184,9 +169,4 @@ int main(int argc, char* argv[])
         }
     }
     return 0;
-}
-
-int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
-{
-	return main(__argc, __argv);
 }

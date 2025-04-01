@@ -87,7 +87,7 @@ bool BaseTexture::isNULL()
         return true;
     return false;
 }
-void position::getPos(const int x, const int y)
+void position::setPos(const int x, const int y)
 {
     this->x = x;
     this->y = y;
