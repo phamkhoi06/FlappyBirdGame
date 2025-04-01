@@ -61,10 +61,10 @@
     <ClInclude Include="headers\Land.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\Sound.h">
+    <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="headers\Sound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

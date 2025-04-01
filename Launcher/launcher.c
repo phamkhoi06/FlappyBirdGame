@@ -20,7 +20,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         NULL,      // Use parent's environment block
         workingDir,// Set working directory
         &si,       // Pointer to STARTUPINFO structure
-        &pi)) {    // Pointer to PROCESS_INFORMATION structure
+        &pi))    // Pointer to PROCESS_INFORMATION structure
+    {
         MessageBox(NULL, L"Failed to start FlappyBirdGame.exe", L"Error", MB_OK | MB_ICONERROR);
         return 1;
     }

@@ -26,6 +26,7 @@ bool sound::init()
             printf("Failed to load chord! SDL_mixer Error: %s\n", Mix_GetError());
         if (!Load(sound_path))
         {
+			std::cout << "Load the sound image failed!" << std::endl;
         }
         else
         {

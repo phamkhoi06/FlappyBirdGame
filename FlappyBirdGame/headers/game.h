@@ -60,6 +60,6 @@ public:
 private:
     void loadBestScore();
     void saveBestScore();
-    const double scaleNumberS;
+    const double scaleNumber;
     int bestScore;
 };
