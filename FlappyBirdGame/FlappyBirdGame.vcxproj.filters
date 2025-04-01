@@ -36,7 +36,7 @@
     <ClCompile Include="sources\Sound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="a.cpp">
+    <ClCompile Include="entrypoint.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
