@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		vcpkg.json = vcpkg.json
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Launcher", "Launcher\Launcher.vcxproj", "{A81B21A3-5927-4475-949D-38FFB8867EB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -38,6 +40,15 @@ Global
 		{AC79FB51-3DA7-4A58-9C5C-C9645815606D}.Release - Static Linking|x64.Build.0 = Release - Static Linking|x64
 		{AC79FB51-3DA7-4A58-9C5C-C9645815606D}.Release - Static Linking|x86.ActiveCfg = Release - Static Linking|Win32
 		{AC79FB51-3DA7-4A58-9C5C-C9645815606D}.Release - Static Linking|x86.Build.0 = Release - Static Linking|Win32
+		{A81B21A3-5927-4475-949D-38FFB8867EB3}.Debug|x64.ActiveCfg = Debug|x64
+		{A81B21A3-5927-4475-949D-38FFB8867EB3}.Debug|x86.ActiveCfg = Debug|Win32
+		{A81B21A3-5927-4475-949D-38FFB8867EB3}.Debug|x86.Build.0 = Debug|Win32
+		{A81B21A3-5927-4475-949D-38FFB8867EB3}.Release - Dynamic Linking|x64.ActiveCfg = Release - Dynamic Linking|x64
+		{A81B21A3-5927-4475-949D-38FFB8867EB3}.Release - Dynamic Linking|x64.Build.0 = Release - Dynamic Linking|x64
+		{A81B21A3-5927-4475-949D-38FFB8867EB3}.Release - Dynamic Linking|x86.ActiveCfg = Release - Dynamic Linking|Win32
+		{A81B21A3-5927-4475-949D-38FFB8867EB3}.Release - Dynamic Linking|x86.Build.0 = Release - Dynamic Linking|Win32
+		{A81B21A3-5927-4475-949D-38FFB8867EB3}.Release - Static Linking|x64.ActiveCfg = Release - Static Linking|x64
+		{A81B21A3-5927-4475-949D-38FFB8867EB3}.Release - Static Linking|x86.ActiveCfg = Release - Static Linking|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
