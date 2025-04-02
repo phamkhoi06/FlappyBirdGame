@@ -1,12 +1,51 @@
-﻿# Yet another Flappy Bird Game
-
-<h3> 🌟 Soar Beyond the Horizon - A Flight to Triumph and Glory 🌟 </h3>
+﻿<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="#">
+    <img src="FlappyBirdGame/resources/favicon.ico" alt="Logo" width="64" height="64">
+  </a>
+  <h1 align="center">Yet another Flappy Bird Game</h1>
+  <p align="center">
+    <h3> 🌟 Soar Beyond the Horizon - A Flight to Triumph and Glory 🌟 </h3>
 
 Guide your fearless little bird through an endless sky, where the wind whispers secrets of the heavens and every flap is a step closer to destiny. Dodge towering obstacles, defy gravity, and embrace the thrill of the unknown.
 
 With each graceful ascent, the stars shimmer in quiet applause—will you reach the fabled land of eternal bliss, or will the winds of fate pull you back? The sky is vast, the journey perilous, but the dream of flight lives on.
 
-Flap. Soar. Conquer.
+<strong>Flap. Soar. Conquer.</strong>
+    <br />
+    <br />
+  </p>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>📑 Table of Contents</summary>
+  <ol>
+    <li><a href="#screenshots">Screenshots</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#requirements">Requirements</a></li>
+    <li><a href="#installation">Installation</a></li>
+    <li>
+      <a href="#building">Building</a>
+      <ul>
+        <li><a href="#visual-studio-ide-recommended">Visual Studio IDE</a></li>
+        <li><a href="#using-cmake">CMake</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-to-play">How to Play</a></li>
+    <li>
+      <a href="#game-architecture">Game Architecture</a>
+      <ul>
+        <li><a href="#class-overview">Class Overview</a></li>
+        <li><a href="#game-workflow">Game Workflow</a></li>
+        <li><a href="#class-interactions">Class Interactions</a></li>
+      </ul>
+    </li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
+    <li><a href="#license">License</a></li>
+  </ol>
+</details>
 
 ## Screenshots
 
@@ -90,7 +129,7 @@ cd FlappyBirdGame
 ./flappy-bird.exe
 ```
 
-### Using CMake
+### CMake
 1. Clone the repository:
 ```
 git clone https://github.com/phamkhoi06/FlappyBirdGame.git
