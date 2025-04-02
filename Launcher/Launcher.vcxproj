@@ -219,6 +219,9 @@ XCOPY /Y /E /D "$(TargetDir)$(TargetFileName)" "%BuildDir%\"</Command>
   <ItemGroup>
     <Image Include="..\FlappyBirdGame\resources\favicon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

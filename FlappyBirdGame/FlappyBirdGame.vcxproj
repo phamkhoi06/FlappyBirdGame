@@ -136,6 +136,13 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>SET BuildDir=$(SolutionDir)build
+IF NOT EXIST "%BuildDir%" MKDIR "%BuildDir%"
+XCOPY /Y /E /D "$(TargetDir)$(TargetFileName)" "%BuildDir%\bin\"
+XCOPY /Y /E /D "$(TargetDir)*.dll" "%BuildDir%\bin\"
+XCOPY /Y /E /D "$(ProjectDir)resources\*" "%BuildDir%\resources\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - Static Linking|Win32'">
     <ClCompile>
@@ -154,6 +161,13 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>SET BuildDir=$(SolutionDir)build
+IF NOT EXIST "%BuildDir%" MKDIR "%BuildDir%"
+IF EXIST "%BuildDir%" RMDIR /S /Q "%BuildDir%"
+XCOPY /Y /E /D "$(TargetDir)$(TargetFileName)" "%BuildDir%\"
+XCOPY /Y /E /D "$(ProjectDir)resources\*" "%BuildDir%\resources\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -187,7 +201,6 @@
     <PostBuildEvent>
       <Command>SET BuildDir=$(SolutionDir)build
 IF NOT EXIST "%BuildDir%" MKDIR "%BuildDir%"
-IF EXIST "%BuildDir%" RMDIR /S /Q "%BuildDir%"
 XCOPY /Y /E /D "$(TargetDir)$(TargetFileName)" "%BuildDir%\bin\"
 XCOPY /Y /E /D "$(TargetDir)*.dll" "%BuildDir%\bin\"
 XCOPY /Y /E /D "$(ProjectDir)resources\*" "%BuildDir%\resources\"</Command>
